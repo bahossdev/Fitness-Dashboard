@@ -199,8 +199,8 @@ $(document).ready(function () {
 
       // Loop through history and display searched food on buttons
       for (savedFood of savedFoods) {
-        let foodButton = `<button>${savedFood.foodName + ", " + savedFood.quantity + savedFood.measurementUnit}</button>`;
-        document.getElementById("history").innerHTML += foodButton;
+        let foodButton = `<button id='results'>${savedFood.foodName + ", " + savedFood.quantity + savedFood.measurementUnit}</button>`;
+        document.getElementById("results").innerHTML += foodButton;
       }
     // }
     // getFoodHistory();
