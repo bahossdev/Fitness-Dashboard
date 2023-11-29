@@ -57,37 +57,36 @@
             <a href="#activity">Activity</a>
             <a href="#history">History</a>
         </nav>
-        <div class="content container form-container">
-            <form action="" class="form">
-                <div class="logo content" id="food">Nutrition Info</div>
-                <input type="text" id="food-input" class="input" required placeholder="Enter food name">
-                <input type="text" id="amount" class="input" required placeholder="Enter number">
-                <select type="select" id="dropdown-menu foodType" required class="input">
-                    <option value="">Please select an option</option>
-                    <option value="serving">serving</option>
-                    <option value="gram">gram</option>
-                    <option value="ounce">ounce</option>
-                    <option value="cup">cup</option>
-                    <option value="unit">unit</option>
-                </select>
-                <input type="submit" value="Search button" class="input submit">
-                <div class="or">or</div>
-                <div class="input btn">Food History</div>
-            </form>
 
-            <form action="" class="form">
-                <div class="logo content" id="activity">Activity</div>
-                <input type="text" id="activity-input" class="input" required placeholder="Enter activity">
-                <input type="text" id="time" class="input" required placeholder="Enter minutes">
-                <select type="select" id="dropdown-menu activityType" required class="input">
-                    <option value="">Please select an option</option>
-                    <option value="minute">minute</option>
-                    <option value="hour">hour</option>
-                </select>
-                <input type="submit" value="Search button" class="input submit">
-                <div class="or">or</div>
-                <div class="input btn">Activity History</div>
-            </form>
+    <div class="content container form-container tabs tab-round">
+        
+        <!-- Food form -->
+        <form action="" class="form foodForm">
+            <div class="logo content" id="food">Nutrition Info</div>
+            <input type="text" id="food-input" class="input foodText" required="" placeholder="Enter food name">
+            <input type="text" id="amount" class="input foodInput" required placeholder="Enter number">
+            <select type="select" id="foodType" required class="input">
+                <option>Please select an option</option>
+                <option class="measure" value="serving">serving</option>
+                <option class="measure" value="gram">gram</option>
+                <option class="measure" value="ounce">ounce</option>
+                <option class="measure" value="cup">cup</option>
+                <option class="measure" value="unit">unit</option>
+            </select>
+            <input type="submit" value="Search button" class="input submit">
+            <div class="or">or</div>
+            <div class="input btn">Food History</div>
+        </form>
+
+        <!-- Activity form -->
+        <form action="" class="form activityForm">
+            <div class="logo content" id="activity">Activity</div>
+            <input type="text" id="activity-input" class="input activityText" required placeholder="Enter activity">
+            <input type="text" id="duration" class="input" required placeholder="Enter duration in minutes">
+            <input type="submit" value="Search button" class="input submit">
+            <div class="or">or</div>
+            <div class="input btn">Activity History</div>
+        </form>
 
             <form action="" class="form">
                 <div class="logo" id="history">Search Results</div>
