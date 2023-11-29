@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8"/>
+
+<head>
+    <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Fitness Dashboard</title>
-  </head>
-
-
+</head>
 
 <body>
     <header>
@@ -15,52 +14,57 @@
     </header>
 
     <div class="tabs">
+
+        <!-- Navigation bar -->
         <nav>
             <a href="#food">Nutrition Info</a>
             <a href="#activity">Activity</a>
             <a href="#history">History</a>
         </nav>
 
-    <div class="content container form-container tabs tab-round">
-        
-        <!-- Food form -->
-        <form action="" class="form foodForm">
-            <div class="logo content" id="food">Nutrition Info</div>
-            <input type="text" id="food-input" class="input foodText" required="" placeholder="Enter food name">
-            <input type="text" id="amount" class="input foodInput" required placeholder="Enter number">
-            <select type="select" id="foodType" required class="input">
-                <option>Please select an option</option>
-                <option class="measure" value="serving">serving</option>
-                <option class="measure" value="gram">gram</option>
-                <option class="measure" value="ounce">ounce</option>
-                <option class="measure" value="cup">cup</option>
-                <option class="measure" value="unit">unit</option>
-            </select>
-            <input type="submit" value="Search button" class="input submit">
+        <div class="content container form-container tabs tab-round">
+
+            <!-- Food form -->
+            <form action="" class="form foodForm">
+                <div class="logo content" id="food">Nutrition Info</div>
+                <input type="text" id="food-input" class="input foodText" required="" placeholder="Enter food name">
+                <input type="text" id="amount" class="input foodInput" required placeholder="Enter number">
+                <select type="select" id="foodType" required class="input">
+                    <option>Please select an option</option>
+                    <option class="measure" value="serving">serving</option>
+                    <option class="measure" value="gram">gram</option>
+                    <option class="measure" value="ounce">ounce</option>
+                    <option class="measure" value="cup">cup</option>
+                    <option class="measure" value="unit">unit</option>
+                </select>
+                <input type="submit" value="Search button" class="input submit">
+                <div class="or">or</div>
+                <div class="input btn">Food History</div>
+            </form>
+
+            <!-- Activity form -->
+            <form action="" class="form activityForm">
+                <div class="logo content" id="activity">Activity</div>
+                <input type="text" id="activity-input" class="input activityText" required placeholder="Enter activity">
+                <input type="text" id="duration" class="input" required placeholder="Enter duration in minutes">
+                <input type="submit" value="Search button" class="input submit">
+                <div class="or">or</div>
+                <div class="input btn">Activity History</div>
+            </form>
+
+
+            <!-- Result Form -->
+            <form action="" class="resultForm" id="history">
+                <div class="logo" id="results">Search Results</div>
+
+                <!-- <input type="submit" value="Search button" class="input submit">
             <div class="or">or</div>
-            <div class="input btn">Food History</div>
-        </form>
+            <div class="input btn">Food History</div> -->
+            </form>
+        </div>
 
-        <!-- Activity form -->
-        <form action="" class="form activityForm">
-            <div class="logo content" id="activity">Activity</div>
-            <input type="text" id="activity-input" class="input activityText" required placeholder="Enter activity">
-            <input type="text" id="duration" class="input" required placeholder="Enter duration in minutes">
-            <input type="submit" value="Search button" class="input submit">
-            <div class="or">or</div>
-            <div class="input btn">Activity History</div>
-        </form>
+        <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+        <script src="./assets/js/script.js"></script>
+</body>
 
-        <form action="" class="form">
-            <div class="logo" id="history">Search Results</div>
-
-            <input type="submit" value="Search button" class="input submit">
-            <div class="or">or</div>
-            <div class="input btn">Food History</div>
-        </form>
-    </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="./assets/js/script.js"></script>
-  </body>
 </html>

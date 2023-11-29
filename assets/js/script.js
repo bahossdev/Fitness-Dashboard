@@ -56,7 +56,7 @@ $(document).ready(function () {
     if (!activityText || !durationEl) {
       alert("Please type a keyword!");
     } else {
-      getActivityInfo(activity, duration);
+      getActivityInfo(activity, duration)
       console.log(activity);
       console.log(duration);
       $(".activityText").val("");
@@ -71,7 +71,7 @@ $(document).ready(function () {
     getInfo(history);
   });
 
-  // Fetch data for food search
+  // Fetch data for food search and store to local storage as foodObject
   function getFoodInfo(food, amount, measure) {
     let APIKey = "b5e2ab46de743f89705388baac3abb12";
     let APIId = "b84dedab";
@@ -79,30 +79,56 @@ $(document).ready(function () {
     console.log(amount);
     console.log(measure);
 
-    let requsetUrl =
-      "https://api.edamam.com/api/nutrition-data?app_id=" +
-      APIId +
-      "&app_key=" +
-      APIKey +
-      "&nutrition-type=cooking&ingr=" +
-      amount + '%20' + measure + '%20' + food;
+    // Store to local, avoid repetitive input 
+    let foodObject = {
+      foodName: food,
+      quantity: amount,
+      measurementUnit: measure,
+    }
+    console.log(foodObject);
 
-    fetch(requsetUrl)
-      .then(function (response) {
-        if (response.ok) {
-          response.json().then(function (data) {
-            console.log(data.calories);
-            console.log(data.totalDaily);
-            // displayResult(data);
-            // saveInfo(data); // data can be replaced by selected objects/elements
-          });
-        } else {
-          alert("Error: " + response.statusText);
-        }
-      })
-      .catch(function (error) {
-        alert("Unable to connect to the server");
-      });
+    let savedFoods = JSON.parse(localStorage.getItem('foodObjects')) || [];
+    if (savedFoods.length >= 10) {
+      savedFoods.pop();
+    }
+
+    // check for exisiting 
+    let itemExists = savedFoods.some(savedFood =>
+      savedFood.foodName.toUpperCase() === foodObject.foodName.toUpperCase() &&
+      savedFood.quantity === foodObject.quantity &&
+      savedFood.measurementUnit.toUpperCase() === foodObject.measurementUnit.toUpperCase()
+    );
+
+    if (!itemExists) {
+      savedFoods.push(foodObject);
+
+      localStorage.setItem('foodObjects', JSON.stringify(savedFoods));
+
+      // Fetch for food info
+      let requestUrl =
+        "https://api.edamam.com/api/nutrition-data?app_id=" +
+        APIId +
+        "&app_key=" +
+        APIKey +
+        "&nutrition-type=cooking&ingr=" +
+        amount + '%20' + measure + '%20' + food;
+
+      fetch(requestUrl)
+        .then(function (response) {
+          if (response.ok) {
+            response.json().then(function (data) {
+              console.log(data.calories);
+              console.log(data.totalDaily);
+              // displayResult(data);
+            });
+          } else {
+            alert("Error: " + response.statusText);
+          }
+        })
+        .catch(function (error) {
+          alert("Unable to connect to the server");
+        });
+    }
   }
 
   // Fetch data for activity search
@@ -110,64 +136,84 @@ $(document).ready(function () {
     let APIKey = "WtIp1I8eoOwneW7Y533fWIk78SoMiG6rEKqV9OJR";
     console.log(activity);
     console.log(duration);
-    baseUrl = "https://api.api-ninjas.com/v1/caloriesburned?activity=";
-    return fetch(baseUrl + activity + "&duration=" + duration, {
-      headers: { "x-api-key": APIKey },
-    }).then((response) =>
-      response.json().then(function (data) {
-        console.log(data);
-        // displayResult(data);
-        // saveInfo(data); // data can be replaced by selected objects/elements
-      })
+
+    // Store to local, avoid repetitive input 
+    let activityObject = {
+      activityName: activity,
+      duration: duration,
+    }
+    console.log(activityObject);
+
+    // check for exisiting 
+    let savedActivities = JSON.parse(localStorage.getItem('activityObject')) || [];
+    if (savedActivities.length >= 10) {
+      savedActivities.pop();
+    }
+
+    let itemExists = savedActivities.some(savedActivity =>
+      savedActivity.activityName.toUpperCase() === activityObject.activityName.toUpperCase()
     );
+
+    if (!itemExists) {
+      savedActivities.push(activityObject);
+
+      localStorage.setItem('activityObject', JSON.stringify(savedActivities));
+
+      // Fetch for activity
+      baseUrl = "https://api.api-ninjas.com/v1/caloriesburned?activity=";
+      return fetch(baseUrl + activity + "&duration=" + duration, {
+        headers: { "x-api-key": APIKey },
+      }).then((response) =>
+        response.json().then(function (data) {
+          console.log(data);
+          // displayResult(data);
+          // saveInfo(data); // data can be replaced by selected objects/elements
+          // baseUrl = "https://api.api-ninjas.com/v1/caloriesburnedactivities";
+          // return fetch(baseUrl, {
+          //   headers: { "x-api-key": APIKey },
+          // }).then((response) =>
+          //   response.json().then(function (data) {
+          //     console.log(data);
+        })
+      );
+    }
   }
+    // // Display the search result
+    // function displayResult(data) {
+    //   // Extract relevant information from the API response
+    //   // let something = data.thing;
 
-  // // Display the search result
-  // function displayResult(data) {
-  //   // Extract relevant information from the API response
-  //   // let something = data.thing;
+    //   // Update the HTML elements with the extracted information
+    //   document.getElementById("#thing").innerHTML = thing;
+    //   // or
+    //   $(`#thing${i}`).html(`${thing}`);
+    // }
 
-  //   // Update the HTML elements with the extracted information
-  //   document.getElementById("#thing").innerHTML = thing;
-  //   // or
-  //   $(`#thing${i}`).html(`${thing}`);
+    // Display saved searches for food
+    // function getFoodHistory() {
+      let savedFoods = JSON.parse(localStorage.getItem('foodObjects')) || [];
+      if (savedFoods.length >= 10) {
+        savedFoods.pop();
+      }
+
+
+      // Loop through history and display searched food on buttons
+      for (savedFood of savedFoods) {
+        let foodButton = `<button>${savedFood.foodName + ", " + savedFood.quantity + savedFood.measurementUnit}</button>`;
+        document.getElementById("history").innerHTML += foodButton;
+      }
+    // }
+    // getFoodHistory();
+
+
+  });
+
+  // if (data.calories) {
+  //   var calories = document.createElement("p");
+  //   calories.textContent = "Calories " + Math.round(data.calories, 2);
+  //   resultsE1.appendChild(calories);
+  // } else {
+  //   var calories = document.createElement("p");
+  //   satFat.textContent = "Calories  - ";
+  //   resultsE1.appendChild(calories);
   // }
-
-  // // Retreive saved searched
-  // function getHistory() {
-  //   let allThings = JSON.parse(localStorage.getItem("#things")) || [];
-  //   let things = allThings.slice(0, 10);
-
-  //   // Loop through history and display item
-  //   for (thing of things) {
-  //     let thingEl = `<button class='history'>${thing}</button>`;
-  //     document.getElementById("thing").innerHTML += thingEl;
-  //   }
-  // }
-  // getHistory();
-
-  // // Store searches in local storage, avoiding repetitive names
-  // function saveSearch(newThing) {
-  //   let things = JSON.parse(localStorage.getItem("#thing")) || [];
-  //   if (things.length >= 10) {
-  //     things.pop();
-  //   }
-
-  //   let itemExists = false;
-  //   for (thing of things) {
-  //     if (thing.toUpperCase() === newThing.toUpperCase()) {
-  //       itemExists = true;
-  //       break;
-  //     }
-  //   }
-  //   if (!itemExists) {
-  //     things.unshift(newThing);
-  //     localStorage.setItem("#thing", JSON.stringify(things));
-
-  //     // Dynamically add the new search to the list (if it doesn't alraedy exist)
-  //     let capThing = newThing.charAt(0).toUpperCase() + newThing.slice(1);
-  //     let thingEl = `<button class='history'>${capThing}</button>`;
-  //     document.getElementById("historyList").innerHTML += thingEl;
-  //   }
-  // }
-});
