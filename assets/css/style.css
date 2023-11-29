@@ -17,14 +17,16 @@ body {
   /* Dark mode colors and gradient */
   background: #121212;
   /* Fallback for browsers that don't support gradients */
-  background: linear-gradient(135deg,
-      #121212 25%,
-      #1a1a1a 25%,
-      #1a1a1a 50%,
-      #121212 50%,
-      #121212 75%,
-      #1a1a1a 75%,
-      #1a1a1a);
+  background: linear-gradient(
+    135deg,
+    #121212 25%,
+    #1a1a1a 25%,
+    #1a1a1a 50%,
+    #121212 50%,
+    #121212 75%,
+    #1a1a1a 75%,
+    #1a1a1a
+  );
   background-size: 40px 40px;
 
   /* Animation */
@@ -42,7 +44,7 @@ body {
 }
 
 .card {
-  font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   color: whitesmoke;
   font-size: 70px;
   display: flex;
@@ -52,8 +54,7 @@ body {
   height: 85px;
   border-radius: 30px;
   background: #212121;
-  box-shadow: 15px 15px 30px rgb(25, 25, 25),
-    -15px -15px 30px rgb(60, 60, 60);
+  box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60);
 }
 
 .container {
@@ -122,7 +123,7 @@ body {
 
 .forgotten {
   text-align: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
   width: 80%;
   color: gray;
   margin: 15px 0;
@@ -137,7 +138,7 @@ body {
 .or::before,
 .or::after {
   position: absolute;
-  content: '';
+  content: "";
   width: 700%;
   height: 1px;
   top: 50%;
@@ -149,7 +150,8 @@ body {
   right: 100%;
 }
 
-.or::after {}
+.or::after {
+}
 
 .parent {
   width: 100%;
@@ -191,7 +193,8 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg) translateY(2px);
+  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg)
+    translateY(2px);
   border-radius: 50%;
 }
 
@@ -247,14 +250,14 @@ button {
 }
 
 .cards .card p.second-text {
-  font-size: .7em;
+  font-size: 0.7em;
 }
 
 .cards .card:hover {
   transform: scale(1.1, 1.1);
 }
 
-.cards:hover>.card:not(:hover) {
+.cards:hover > .card:not(:hover) {
   filter: blur(10px);
   transform: scale(0.9, 0.9);
 }
@@ -284,7 +287,11 @@ button {
 }
 
 .wheel {
-  background: radial-gradient(100% 100% at center, hsla(0, 0%, 60%, 0) 47.8%, hsl(0, 0%, 60%) 48%);
+  background: radial-gradient(
+    100% 100% at center,
+    hsla(0, 0%, 60%, 0) 47.8%,
+    hsl(0, 0%, 60%) 48%
+  );
   z-index: 2;
 }
 
@@ -382,7 +389,16 @@ button {
 .hamster__limb--br,
 .hamster__limb--bl {
   border-radius: 0.75em 0.75em 0 0;
-  clip-path: polygon(0 0, 100% 0, 100% 30%, 70% 90%, 70% 100%, 30% 100%, 40% 90%, 0% 30%);
+  clip-path: polygon(
+    0 0,
+    100% 0,
+    100% 30%,
+    70% 90%,
+    70% 100%,
+    30% 100%,
+    40% 90%,
+    0% 30%
+  );
   top: 1em;
   left: 2.8em;
   width: 1.5em;
@@ -417,13 +433,34 @@ button {
 
 .spoke {
   animation: spoke var(--dur) linear infinite;
-  background: radial-gradient(100% 100% at center, hsl(0, 0%, 60%) 4.8%, hsla(0, 0%, 60%, 0) 5%),
-    linear-gradient(hsla(0, 0%, 55%, 0) 46.9%, hsl(0, 0%, 65%) 47% 52.9%, hsla(0, 0%, 65%, 0) 53%) 50% 50% / 99% 99% no-repeat;
+  background: radial-gradient(
+      100% 100% at center,
+      hsl(0, 0%, 60%) 4.8%,
+      hsla(0, 0%, 60%, 0) 5%
+    ),
+    linear-gradient(
+        hsla(0, 0%, 55%, 0) 46.9%,
+        hsl(0, 0%, 65%) 47% 52.9%,
+        hsla(0, 0%, 65%, 0) 53%
+      )
+      50% 50% / 99% 99% no-repeat;
 }
-
+.results {
+  padding: 1rem 1.2rem;
+  margin: 1rem;
+  border-radius: 2rem;
+  display: block;
+  width: 80%;
+  border: none;
+  box-shadow: inset 6px 6px 8px rgba(97, 97, 97, 0.075),
+    6px 6px 6px rgba(255, 255, 255, 0.781);
+  outline: none;
+  background-color: inherit;
+  color: white;
+  font-size: inherit;
+}
 /* Animations */
 @keyframes hamster {
-
   from,
   to {
     transform: rotate(4deg) translate(-0.8em, 1.85em);
@@ -435,7 +472,6 @@ button {
 }
 
 @keyframes hamsterHead {
-
   from,
   25%,
   50%,
@@ -453,7 +489,6 @@ button {
 }
 
 @keyframes hamsterEye {
-
   from,
   90%,
   to {
@@ -466,7 +501,6 @@ button {
 }
 
 @keyframes hamsterEar {
-
   from,
   25%,
   50%,
@@ -484,7 +518,6 @@ button {
 }
 
 @keyframes hamsterBody {
-
   from,
   25%,
   50%,
@@ -502,7 +535,6 @@ button {
 }
 
 @keyframes hamsterFRLimb {
-
   from,
   25%,
   50%,
@@ -520,7 +552,6 @@ button {
 }
 
 @keyframes hamsterFLLimb {
-
   from,
   25%,
   50%,
@@ -538,7 +569,6 @@ button {
 }
 
 @keyframes hamsterBRLimb {
-
   from,
   25%,
   50%,
@@ -556,7 +586,6 @@ button {
 }
 
 @keyframes hamsterBLLimb {
-
   from,
   25%,
   50%,
@@ -574,7 +603,6 @@ button {
 }
 
 @keyframes hamsterTail {
-
   from,
   25%,
   50%,

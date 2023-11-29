@@ -4,7 +4,8 @@ let foodText = document.querySelector(".foodText");
 let amountEl = document.querySelector("#amount");
 let measureEl = document.getElementById("foodType");
 let activityText = document.querySelector(".activityText");
-let durationEl = document.getElementById("duration")
+let durationEl = document.getElementById("duration");
+let resultsE1 = document.getElementById("results");
 
 // Run if ready
 $(document).ready(function () {
@@ -30,7 +31,7 @@ $(document).ready(function () {
     }
   });
 
-  // Depending on the layout, there might be need for tab-switcher 
+  // Depending on the layout, there might be need for tab-switcher
 
   // Function to call functions for fetch, storage and adding the new item
   function foodSearch() {
@@ -85,7 +86,11 @@ $(document).ready(function () {
       "&app_key=" +
       APIKey +
       "&nutrition-type=cooking&ingr=" +
-      amount + '%20' + measure + '%20' + food;
+      amount +
+      "%20" +
+      measure +
+      "%20" +
+      food;
 
     fetch(requsetUrl)
       .then(function (response) {
@@ -93,7 +98,7 @@ $(document).ready(function () {
           response.json().then(function (data) {
             console.log(data.calories);
             console.log(data.totalDaily);
-            // displayResult(data);
+            displayResult_FoodInfo(data);
             // saveInfo(data); // data can be replaced by selected objects/elements
           });
         } else {
@@ -121,7 +126,171 @@ $(document).ready(function () {
       })
     );
   }
+  function getActivityInfo(activity, duration) {
+    let APIKey = "WtIp1I8eoOwneW7Y533fWIk78SoMiG6rEKqV9OJR";
+    console.log(activity);
+    console.log(duration);
+    baseUrl = "https://api.api-ninjas.com/v1/caloriesburned?activity=";
+    return fetch(baseUrl + activity + "&duration=" + duration, {
+      headers: { "x-api-key": APIKey },
+    }).then((response) =>
+      response.json().then(function (data) {
+        console.log(data);
+        // displayResult(data);
+        // saveInfo(data); // data can be replaced by selected objects/elements
+      })
+    );
+  }
 
+  // Display the search result for Nutrients Info
+  function displayResult_FoodInfo(data) {
+    // Extract relevant information from the API response
+    while (resultsE1.firstChild) {
+      resultsE1.removeChild(resultsE1.firstChild);
+    }
+    if (data.calories) {
+      var calories = document.createElement("p");
+      calories.textContent = "Calories " + Math.round(data.calories, 2);
+      resultsE1.appendChild(calories);
+    } else {
+      var calories = document.createElement("p");
+      satFat.textContent = "Calories  - ";
+      resultsE1.appendChild(calories);
+    }
+
+    if (data.totalDaily.FASAT) {
+      var satFat = document.createElement("p");
+      satFat.textContent =
+        data.totalDaily.FASAT.label +
+        " " +
+        Math.round(data.totalDaily.FASAT.quantity, 2) +
+        data.totalDaily.FASAT.unit;
+      resultsE1.appendChild(satFat);
+    } else {
+      var satFat = document.createElement("p");
+      satFat.textContent = "Saturated  - ";
+      resultsE1.appendChild(satFat);
+    }
+    if (data.totalDaily.FAT) {
+      var Fat = document.createElement("p");
+      Fat.textContent =
+        data.totalDaily.FAT.label +
+        " " +
+        Math.round(data.totalDaily.FAT.quantity, 2) +
+        data.totalDaily.FAT.unit;
+      resultsE1.appendChild(Fat);
+    } else {
+      var Fat = document.createElement("p");
+      Fat.textContent = "Fat - ";
+      resultsE1.appendChild(Fat);
+    }
+
+    if (data.totalDaily.CHOCDF) {
+      var carb = document.createElement("p");
+      carb.textContent =
+        data.totalDaily.CHOCDF.label +
+        " " +
+        Math.round(data.totalDaily.CHOCDF.quantity, 2) +
+        data.totalDaily.CHOCDF.unit;
+      resultsE1.appendChild(carb);
+    } else {
+      var carb = document.createElement("p");
+      carb.textContent = "Carbs   -";
+      resultsE1.appendChild(carb);
+    }
+    if (data.totalDaily.PROCNT) {
+      var protein = document.createElement("p");
+      protein.textContent =
+        data.totalDaily.PROCNT.label +
+        " " +
+        Math.round(data.totalDaily.PROCNT.quantity, 2) +
+        data.totalDaily.PROCNT.unit;
+      resultsE1.appendChild(protein);
+    } else {
+      var protein = document.createElement("p");
+      protein.textContent = "protein   -";
+      resultsE1.appendChild(protein);
+    }
+    if (data.totalDaily.VITA_RAE) {
+      var vitA = document.createElement("p");
+      vitA.textContent =
+        data.totalDaily.VITA_RAE.label +
+        " " +
+        Math.round(data.totalDaily.VITA_RAE.quantity, 2) +
+        data.totalDaily.VITA_RAE.unit;
+      resultsE1.appendChild(vitA);
+    } else {
+      var vitA = document.createElement("p");
+      vitA.textContent = "Vitamin A   - ";
+      resultsE1.appendChild(vitA);
+    }
+    if (data.totalDaily.VITC) {
+      var vitC = document.createElement("p");
+      vitC.textContent =
+        data.totalDaily.VITC.label +
+        " " +
+        Math.round(data.totalDaily.VITC.quantity, 2) +
+        data.totalDaily.VITC.unit;
+      resultsE1.appendChild(vitC);
+    } else {
+      var vitC = document.createElement("p");
+      vitC.textContent = "Vitamin C  - ";
+      resultsE1.appendChild(vitC);
+    }
+    if (data.totalDaily.VITD) {
+      var vitD = document.createElement("p");
+      vitD.textContent =
+        data.totalDaily.VITD.label +
+        " " +
+        Math.round(data.totalDaily.VITD.quantity, 2) +
+        data.totalDaily.VITD.unit;
+      resultsE1.appendChild(vitD);
+    } else {
+      var vitD = document.createElement("p");
+      vitD.textContent = "Vitamin D -";
+      resultsE1.appendChild(vitD);
+    }
+
+    if (data.totalDaily.CA) {
+      var calcium = document.createElement("p");
+      calcium.textContent =
+        data.totalDaily.CA.label +
+        " " +
+        Math.round(data.totalDaily.CA.quantity, 2) +
+        data.totalDaily.CA.unit;
+      resultsE1.appendChild(calcium);
+    } else {
+      var calcium = document.createElement("p");
+      calcium.textContent = "calcium  -";
+      resultsE1.appendChild(calcium);
+    }
+    if (data.totalDaily.K) {
+      var potassium = document.createElement("p");
+      potassium.textContent =
+        data.totalDaily.K.label +
+        " " +
+        Math.round(data.totalDaily.K.quantity, 2) +
+        data.totalDaily.K.unit;
+      resultsE1.appendChild(potassium);
+    } else {
+      var potassium = document.createElement("p");
+      potassium.textContent = "potassium  -";
+      resultsE1.appendChild(potassium);
+    }
+    if (data.totalDaily.FE) {
+      var iron = document.createElement("p");
+      iron.textContent =
+        data.totalDaily.FE.label +
+        " " +
+        Math.round(data.totalDaily.FE.quantity, 2) +
+        data.totalDaily.FE.unit;
+      resultsE1.appendChild(iron);
+    } else {
+      var iron = document.createElement("p");
+      iron.textContent = "iron  -";
+      resultsE1.appendChild(iron);
+    }
+  }
   // // Display the search result
   // function displayResult(data) {
   //   // Extract relevant information from the API response
