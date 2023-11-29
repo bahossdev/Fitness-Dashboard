@@ -197,5 +197,12 @@ button {
 
 footer {
   background-color: lightpink;
-  border-radius: 15px;
+  border-radius: 20px;
+  border: 5px solid;
 }
+
+.flex {
+  display: flex;
+  justify-content: center;
+}
+
