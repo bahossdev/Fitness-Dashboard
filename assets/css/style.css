@@ -106,6 +106,19 @@ body {
   cursor: pointer;
 }
 
+.history-item {
+  border-radius: 2rem;
+  margin: 6px;
+  padding: 5px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 100;
+  color:#212121;
+  border: 1px solid grey;
+  box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
+  color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
 .btn {
   text-align: center;
   color: black;
