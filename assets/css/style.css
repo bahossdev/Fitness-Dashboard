@@ -167,6 +167,11 @@ body {
 .or::after {
 }
 
+.EMOJIS svg {
+  filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814))
+  drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
+}
+
 .parent {
   width: 100%;
   height: 100%;
