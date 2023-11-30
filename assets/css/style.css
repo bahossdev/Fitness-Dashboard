@@ -118,9 +118,10 @@ body {
   border-radius: 2rem;
   margin: 6px;
   padding: 5px;
-  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   font-weight: 100;
-  color:#212121;
+  color: #212121;
   border: 1px solid grey;
   box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
   color: rgb(161, 161, 161);
@@ -178,7 +179,7 @@ body {
 
 .EMOJIS svg {
   filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814))
-  drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
+    drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
 }
 
 .parent {
@@ -250,11 +251,12 @@ button {
 }
 
 .cards .red {
-  background-color: #D281B5;
+  background-color: #d281b5;
 }
 
 .cards .white {
-  background-color: #9F2C75;
+  background-color: #9f2c75;
+  color: black;
 }
 
 .cards .blue {
@@ -299,7 +301,8 @@ button {
 
 .cards .card p.tip {
   font-size: 25px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   padding: 10px;
 }
 
@@ -686,4 +689,42 @@ button {
 .HAMSTER {
   display: flex;
   justify-content: center;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 100px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 50%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #000;
+  text-decoration: none;
+  cursor: pointer;
 }
