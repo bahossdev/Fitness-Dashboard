@@ -3,9 +3,12 @@ let submitEl = document.querySelector("#submit");
 let foodText = document.querySelector(".foodText");
 let amountEl = document.querySelector("#amount");
 let measureEl = document.getElementById("foodType");
-let activityText = document.querySelector(".activityText");
-let durationEl = document.getElementById("duration");
-let resultsE1 = document.getElementById("results");
+let weightEl = document.querySelector(".weight");
+let heightEl = document.querySelector(".height");
+let ageEl = document.getElementById("age");
+let genderEl = document.getElementById("gender");
+let activityEl = document.getElementById("activity");
+let resultsEl = document.getElementById("results");
 
 // Run if ready
 $(document).ready(function () {
@@ -20,6 +23,17 @@ $(document).ready(function () {
     }
   });
 
+  // Event Handler for the TDEE Search Button
+  $(".tdeeForm .submit").on("click", tdeeSearch);
+
+  // Event Handler for Enter key in the input field
+  $(".tdeeForm" + " #submit").on("keydown", function (event) {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      tdeeSearch();
+    }
+  });
+
   // Event Handler for the Activity Search Button
   $(".activityForm .submit").on("click", activitySearch);
 
@@ -31,8 +45,6 @@ $(document).ready(function () {
     }
   });
 
-  // Depending on the layout, there might be need for tab-switcher
-
   // Function to call functions for fetch, storage and adding the new item
   function foodSearch() {
     event.preventDefault();
@@ -41,13 +53,52 @@ $(document).ready(function () {
     let measure = measureEl.value;
 
     if (!foodText || !amount || !measureEl) {
-      alert("Please type a keyword!");
+      alert("Please fill all mandatory fields!");
+    }
+    if (isNaN(amount)) {
+      alert("Please enter a number!");
     } else {
       getFoodInfo(food, amount, measure);
       $(".foodText").val("");
       $("#amount").val("");
+      $("#foodType").val("Choose an option");
     }
   }
+
+  function tdeeSearch() {
+    event.preventDefault();
+    let weight = weightEl.value;
+    let height = heightEl.value;
+    let age = ageEl.value;
+    let gender = genderEl.value;
+    let activityLevel = activityEl.value;
+
+    if (!weight || !height || !age || !gender || !activityLevel) {
+      alert("Please fill all mandatory fields!");
+    }
+    if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+      alert("Please enter a number!");
+    } else {
+      getTDEE(weight, height, age, gender, activityLevel);
+      console.log(weight);
+      console.log(height);
+      console.log(age);
+      console.log(gender);
+      console.log(activityLevel);
+      $(".weight").val("");
+      $(".height").val("");
+      $("#age").val("");
+      $("#gender").val("Gender");
+      $("#activity").val("Please choose an activity level");
+
+    }
+  }
+
+  // Event Handler for saved food searches 
+  $(".foodForm .btn").on("click", function () {
+    getFoodHistory();
+  });
+
 
   function activitySearch() {
     event.preventDefault();
@@ -57,7 +108,7 @@ $(document).ready(function () {
     if (!activityText || !durationEl) {
       alert("Please type a keyword!");
     } else {
-      getActivityInfo(activity, duration)
+      getActivityInfo(activity, duration);
       console.log(activity);
       console.log(duration);
       $(".activityText").val("");
@@ -65,46 +116,12 @@ $(document).ready(function () {
     }
   }
 
-  // Event Handler for saved searches // if we want them to be shown upon clicking on buttons?
-  $(document).on("click", ".history", function (event) {
-    let historyEl = $(event.target);
-    let history = historyEl.text();
-    getInfo(history);
-  });
-
   // Fetch data for food search and store to local storage as foodObject
   function getFoodInfo(food, amount, measure) {
     let APIKey = "b5e2ab46de743f89705388baac3abb12";
     let APIId = "b84dedab";
-    console.log(food);
-    console.log(amount);
-    console.log(measure);
 
-    // Store to local, avoid repetitive input 
-    let foodObject = {
-      foodName: food,
-      quantity: amount,
-      measurementUnit: measure,
-    }
-    console.log(foodObject);
-
-    let savedFoods = JSON.parse(localStorage.getItem('foodObjects')) || [];
-    if (savedFoods.length >= 10) {
-      savedFoods.pop();
-    }
-
-    // check for exisiting 
-    let itemExists = savedFoods.some(savedFood =>
-      savedFood.foodName.toUpperCase() === foodObject.foodName.toUpperCase() &&
-      savedFood.quantity === foodObject.quantity &&
-      savedFood.measurementUnit.toUpperCase() === foodObject.measurementUnit.toUpperCase()
-    );
-
-    if (!itemExists) {
-      savedFoods.push(foodObject);
-
-      localStorage.setItem('foodObjects', JSON.stringify(savedFoods));
-
+  
       // Fetch for food info
       let requestUrl =
         "https://api.edamam.com/api/nutrition-data?app_id=" +
@@ -120,7 +137,7 @@ $(document).ready(function () {
             response.json().then(function (data) {
               console.log(data.calories);
               console.log(data.totalDaily);
-              displayResult_FoodInfo(data);
+              displayFoodResult(data, food, amount, measure);
             });
           } else {
             alert("Error: " + response.statusText);
@@ -129,56 +146,97 @@ $(document).ready(function () {
         .catch(function (error) {
           alert("Unable to connect to the server");
         });
+     // Store to local, avoid repetitive input 
+     let foodObject = {
+      foodName: food,
+      quantity: amount,
+      measurementUnit: measure,
     }
+
+    let savedFoods = JSON.parse(localStorage.getItem('foodObject')) || [];
+    if (savedFoods.length >= 10) {
+      savedFoods.shift();
+    }
+
+    // check for exisiting 
+    let itemExists = savedFoods.some(savedFood =>
+      savedFood.foodName.toUpperCase() === foodObject.foodName.toUpperCase() &&
+      savedFood.quantity === foodObject.quantity &&
+      savedFood.measurementUnit === foodObject.measurementUnit
+    );
+
+    if (!itemExists) {
+      savedFoods.push(foodObject);
+      localStorage.setItem('foodObject', JSON.stringify(savedFoods));
+    }
+  }
+
+  // Fetch data for TDEE search
+  function getTDEE(weight, height, age, gender, activityLevel) {
+
+    // Fetch for TDEE
+    let XRapidAPIKey = "1cad2c1280mshd2a5acc41eef7ebp10ec4djsnf30acec351ba"
+    let XRapidAPIHost = "mega-fitness-calculator1.p.rapidapi.com";
+    let url =
+      "https://mega-fitness-calculator1.p.rapidapi.com/tdee?weight=" +
+      weight +
+      "&height=" +
+      height +
+      "&activitylevel=" +
+      activityLevel +
+      "&age=" +
+      age +
+      "&gender=" +
+      gender;
+
+    let options = {
+      method: "GET",
+      headers: {
+        "X-RapidAPI-Key": XRapidAPIKey,
+        "X-RapidAPI-Host": XRapidAPIHost,
+      },
+    };
+    fetch(url, options).then(function (response) {
+      if (response.ok) {
+        response.json().then(function (data) {
+          displayTDEEResult(data, weight, height, age, gender, activityLevel);
+        });
+      }
+    });
+
+        // Store to local, avoid repetitive input 
+        let tdeeObject = {
+          weight: weight,
+          height: height,
+          age: age,
+          gender: gender,
+          activityLevel: activityLevel,
+        }
+    
+        // check for exisiting 
+        let savedTDEEs = JSON.parse(localStorage.getItem('tdeeObject')) || [];
+        if (savedTDEEs.length >= 10) {
+          savedTDEEs.shift();
+        }
+    
+        let itemExists = savedTDEEs.some(savedTDEE =>
+          savedTDEE.weight === tdeeObject.weight &&
+          savedTDEE.height === tdeeObject.height &&
+          savedTDEE.age === tdeeObject.age &&
+          savedTDEE.gender === tdeeObject.gender &&
+          savedTDEE.activityLevel === tdeeObject.activityLevel
+        );
+    
+        if (!itemExists) {
+          savedTDEEs.push(tdeeObject);
+    
+          localStorage.setItem('tdeeObject', JSON.stringify(savedTDEEs));
+        }
+    
   }
 
   // Fetch data for activity search
   function getActivityInfo(activity, duration) {
-    let APIKey = "WtIp1I8eoOwneW7Y533fWIk78SoMiG6rEKqV9OJR";
-    console.log(activity);
-    console.log(duration);
-
-    // Store to local, avoid repetitive input 
-    let activityObject = {
-      activityName: activity,
-      duration: duration,
-    }
-    console.log(activityObject);
-
-    // check for exisiting 
-    let savedActivities = JSON.parse(localStorage.getItem('activityObject')) || [];
-    if (savedActivities.length >= 10) {
-      savedActivities.pop();
-    }
-
-    let itemExists = savedActivities.some(savedActivity =>
-      savedActivity.activityName.toUpperCase() === activityObject.activityName.toUpperCase()
-    );
-
-    if (!itemExists) {
-      savedActivities.push(activityObject);
-
-      localStorage.setItem('activityObject', JSON.stringify(savedActivities));
-
-      // Fetch for activity
-      baseUrl = "https://api.api-ninjas.com/v1/caloriesburned?activity=";
-      return fetch(baseUrl + activity + "&duration=" + duration, {
-        headers: { "x-api-key": APIKey },
-      }).then((response) =>
-        response.json().then(function (data) {
-          console.log(data);
-          // displayResult(data);
-          // saveInfo(data); // data can be replaced by selected objects/elements
-          // baseUrl = "https://api.api-ninjas.com/v1/caloriesburnedactivities";
-          // return fetch(baseUrl, {
-          //   headers: { "x-api-key": APIKey },
-          // }).then((response) =>
-          //   response.json().then(function (data) {
-          //     console.log(data);
-        })
-      );
-    }
-  }  function getActivityInfo(activity, duration) {
     let APIKey = "WtIp1I8eoOwneW7Y533fWIk78SoMiG6rEKqV9OJR";
     console.log(activity);
     console.log(duration);
@@ -189,196 +247,267 @@ $(document).ready(function () {
       response.json().then(function (data) {
         console.log(data);
         // displayResult(data);
-        // saveInfo(data); // data can be replaced by selected objects/elements
       })
     );
   }
 
   // Display the search result for Nutrients Info
-  function displayResult_FoodInfo(data) {
+  function displayFoodResult(data, food, amount, measure) {
     // Extract relevant information from the API response
-    while (resultsE1.firstChild) {
-      resultsE1.removeChild(resultsE1.firstChild);
-    }
-    if (data.calories) {
-      var calories = document.createElement("p");
-      calories.textContent = "Calories " + Math.round(data.calories, 2);
-      resultsE1.appendChild(calories);
-    } else {
-      var calories = document.createElement("p");
-      satFat.textContent = "Calories  - ";
-      resultsE1.appendChild(calories);
+    while (resultsEl.firstChild) {
+      resultsEl.removeChild(resultsEl.firstChild);
     }
 
-    if (data.totalDaily.FASAT) {
-      var satFat = document.createElement("p");
-      satFat.textContent =
-        data.totalDaily.FASAT.label +
-        " " +
-        Math.round(data.totalDaily.FASAT.quantity, 2) +
-        data.totalDaily.FASAT.unit;
-      resultsE1.appendChild(satFat);
+    let foodInfo = document.createElement("h3");
+    let capFood = food.charAt(0).toUpperCase() + food.slice(1);
+    foodInfo.textContent = capFood + ', ' + amount + ' ' + measure + '(s)';
+    resultsEl.appendChild(foodInfo);
+
+    if (data.calories) {
+      let calories = document.createElement("p");
+      calories.textContent = "Calories " + Math.round(data.calories, 2);
+      resultsEl.appendChild(calories);
     } else {
-      var satFat = document.createElement("p");
-      satFat.textContent = "Saturated  - ";
-      resultsE1.appendChild(satFat);
+      let calories = document.createElement("p");
+      calories.textContent = "Calories  - ";
+      resultsEl.appendChild(calories);
     }
+
+
     if (data.totalDaily.FAT) {
-      var Fat = document.createElement("p");
+      let Fat = document.createElement("p");
       Fat.textContent =
         data.totalDaily.FAT.label +
         " " +
         Math.round(data.totalDaily.FAT.quantity, 2) +
         data.totalDaily.FAT.unit;
-      resultsE1.appendChild(Fat);
+      resultsEl.appendChild(Fat);
     } else {
-      var Fat = document.createElement("p");
+      let Fat = document.createElement("p");
       Fat.textContent = "Fat - ";
-      resultsE1.appendChild(Fat);
+      resultsEl.appendChild(Fat);
+    }
+
+    if (data.totalDaily.FASAT) {
+      let satFat = document.createElement("p");
+      satFat.textContent =
+        data.totalDaily.FASAT.label +
+        " " +
+        Math.round(data.totalDaily.FASAT.quantity, 2) +
+        data.totalDaily.FASAT.unit;
+      resultsEl.appendChild(satFat);
+    } else {
+      let satFat = document.createElement("p");
+      satFat.textContent = "Saturated  - ";
+      resultsEl.appendChild(satFat);
     }
 
     if (data.totalDaily.CHOCDF) {
-      var carb = document.createElement("p");
+      let carb = document.createElement("p");
       carb.textContent =
         data.totalDaily.CHOCDF.label +
         " " +
         Math.round(data.totalDaily.CHOCDF.quantity, 2) +
         data.totalDaily.CHOCDF.unit;
-      resultsE1.appendChild(carb);
+      resultsEl.appendChild(carb);
     } else {
-      var carb = document.createElement("p");
+      let carb = document.createElement("p");
       carb.textContent = "Carbs   -";
-      resultsE1.appendChild(carb);
+      resultsEl.appendChild(carb);
     }
     if (data.totalDaily.PROCNT) {
-      var protein = document.createElement("p");
+      let protein = document.createElement("p");
       protein.textContent =
         data.totalDaily.PROCNT.label +
         " " +
         Math.round(data.totalDaily.PROCNT.quantity, 2) +
         data.totalDaily.PROCNT.unit;
-      resultsE1.appendChild(protein);
+      resultsEl.appendChild(protein);
     } else {
-      var protein = document.createElement("p");
+      let protein = document.createElement("p");
       protein.textContent = "protein   -";
-      resultsE1.appendChild(protein);
+      resultsEl.appendChild(protein);
     }
     if (data.totalDaily.VITA_RAE) {
-      var vitA = document.createElement("p");
+      let vitA = document.createElement("p");
       vitA.textContent =
         data.totalDaily.VITA_RAE.label +
         " " +
         Math.round(data.totalDaily.VITA_RAE.quantity, 2) +
         data.totalDaily.VITA_RAE.unit;
-      resultsE1.appendChild(vitA);
+      resultsEl.appendChild(vitA);
     } else {
-      var vitA = document.createElement("p");
+      let vitA = document.createElement("p");
       vitA.textContent = "Vitamin A   - ";
-      resultsE1.appendChild(vitA);
+      resultsEl.appendChild(vitA);
     }
     if (data.totalDaily.VITC) {
-      var vitC = document.createElement("p");
+      let vitC = document.createElement("p");
       vitC.textContent =
         data.totalDaily.VITC.label +
         " " +
         Math.round(data.totalDaily.VITC.quantity, 2) +
         data.totalDaily.VITC.unit;
-      resultsE1.appendChild(vitC);
+      resultsEl.appendChild(vitC);
     } else {
-      var vitC = document.createElement("p");
+      let vitC = document.createElement("p");
       vitC.textContent = "Vitamin C  - ";
-      resultsE1.appendChild(vitC);
+      resultsEl.appendChild(vitC);
     }
     if (data.totalDaily.VITD) {
-      var vitD = document.createElement("p");
+      let vitD = document.createElement("p");
       vitD.textContent =
         data.totalDaily.VITD.label +
         " " +
         Math.round(data.totalDaily.VITD.quantity, 2) +
         data.totalDaily.VITD.unit;
-      resultsE1.appendChild(vitD);
+      resultsEl.appendChild(vitD);
     } else {
-      var vitD = document.createElement("p");
+      let vitD = document.createElement("p");
       vitD.textContent = "Vitamin D -";
-      resultsE1.appendChild(vitD);
+      resultsEl.appendChild(vitD);
     }
 
     if (data.totalDaily.CA) {
-      var calcium = document.createElement("p");
+      let calcium = document.createElement("p");
       calcium.textContent =
         data.totalDaily.CA.label +
         " " +
         Math.round(data.totalDaily.CA.quantity, 2) +
         data.totalDaily.CA.unit;
-      resultsE1.appendChild(calcium);
+      resultsEl.appendChild(calcium);
     } else {
-      var calcium = document.createElement("p");
+      let calcium = document.createElement("p");
       calcium.textContent = "calcium  -";
-      resultsE1.appendChild(calcium);
+      resultsEl.appendChild(calcium);
     }
     if (data.totalDaily.K) {
-      var potassium = document.createElement("p");
+      let potassium = document.createElement("p");
       potassium.textContent =
         data.totalDaily.K.label +
         " " +
         Math.round(data.totalDaily.K.quantity, 2) +
         data.totalDaily.K.unit;
-      resultsE1.appendChild(potassium);
+      resultsEl.appendChild(potassium);
     } else {
-      var potassium = document.createElement("p");
+      let potassium = document.createElement("p");
       potassium.textContent = "potassium  -";
-      resultsE1.appendChild(potassium);
+      resultsEl.appendChild(potassium);
     }
     if (data.totalDaily.FE) {
-      var iron = document.createElement("p");
+      let iron = document.createElement("p");
       iron.textContent =
         data.totalDaily.FE.label +
         " " +
         Math.round(data.totalDaily.FE.quantity, 2) +
         data.totalDaily.FE.unit;
-      resultsE1.appendChild(iron);
+      resultsEl.appendChild(iron);
     } else {
-      var iron = document.createElement("p");
+      let iron = document.createElement("p");
       iron.textContent = "iron  -";
-      resultsE1.appendChild(iron);
+      resultsEl.appendChild(iron);
     }
   }
-    // // Display the search result
-    // function displayResult(data) {
-    //   // Extract relevant information from the API response
-    //   // let something = data.thing;
 
-    //   // Update the HTML elements with the extracted information
-    //   document.getElementById("#thing").innerHTML = thing;
-    //   // or
-    //   $(`#thing${i}`).html(`${thing}`);
-    // }
+  // Display the search result for Nutrients Info
+  function displayTDEEResult(data, weight, height, age, gender, activityLevel) {
 
-    // Display saved searches for food
-    // function getFoodHistory() {
-      let savedFoods = JSON.parse(localStorage.getItem('foodObjects')) || [];
-      if (savedFoods.length >= 10) {
-        savedFoods.pop();
-      }
+    // Extract relevant information from the API response
+    while (resultsEl.firstChild) {
+      resultsEl.removeChild(resultsEl.firstChild);
+    }
+
+    let activitiyText;
+    if (activityLevel = 'se') {
+      activitiyText = "Sedentary (office job)"
+    } else if (activityLevel = 'la') {
+      activitiyText = "Light Exercise (1-2 days/week)"
+    } else if (activityLevel = 'ma') {
+      activitiyText = "Moderate Exercise (3-5 days/week)"
+    } else {
+      activitiyText = "Heavy Exercise (6-7 days/week)"
+    }
+
+    let TDEEInfo = document.createElement("h3");
+    TDEEInfo.textContent = gender + ', ' +
+      weight + ' kg, ' +
+      height + ' cm, ' +
+      age + ' years, ' +
+      activitiyText;
+
+    resultsEl.appendChild(TDEEInfo);
+
+    if (data.info.tdee) {
+      let TDEE = document.createElement("p");
+      TDEE.textContent = "Total Daily Energy Expenditure: " +
+        Math.round(data.info.tdee, 2) +
+        ' calories per day';
+      resultsEl.appendChild(TDEE);
+
+    }
+  }
 
 
-      // Loop through history and display searched food on buttons
-      for (savedFood of savedFoods) {
-        let foodButton = `<button id='results'>${savedFood.foodName + ", " + savedFood.quantity + savedFood.measurementUnit}</button>`;
-        document.getElementById("results").innerHTML += foodButton;
-      }
-    // }
-    // getFoodHistory();
+  // Display saved searches for food
+  function getFoodHistory() {
+    let savedFoods = JSON.parse(localStorage.getItem('foodObject')) || [];
+    if (savedFoods.length >= 10) {
+      savedFoods.shift();
+    }
+
+    while (resultsEl.firstChild) {
+      resultsEl.removeChild(resultsEl.firstChild);
+    }
+
+    for (let i = 0; i < savedFoods.length; i++) {
+      let historyItem = document.createElement("button");
+      historyItem.textContent = `${savedFoods[i].foodName}, ${savedFoods[i].quantity} ${savedFoods[i].measurementUnit}(s)`;
+      historyItem.classList.add("history-item");
+
+      console.log(historyItem)
+      // Event listener to call getFoodInfo when the button is clicked
+      historyItem.addEventListener("click", function () {
+        getFoodInfo(savedFoods[i].foodName, savedFoods[i].quantity, savedFoods[i].measurementUnit);
+      });
+
+      resultsEl.appendChild(historyItem);
+
+      //   }
+      // }
+
+      // Loop through saved cities and display item
+      // for (savedFood of savedFoods) {
+
+      //   let historyItem = `<button class='history-item'>${savedFood.foodName}, ${savedFood.quantity} ${savedFood.measurementUnit}(s)</button>`;
+      //   document.getElementById('results').innerHTML += historyItem;
+      //   console.log(historyItem)
+
+    }
+  }
+
+  // Event Handler for Saved foods
+  $(document).on('click', '.history-item', function (event) {
+    event.preventDefault();
+    let selectedFood = $(event.target).text();
+    console.log(selectedFood);
+
+    let clickedFood = selectedFood.split(", ");
+
+    let food = clickedFood[0];
+    let amount = Number(clickedFood[1].split(' ')[0]);
+    let measurementUnit = clickedFood[1].split(' ')[1]
+    let measure = measurementUnit.replace(/\(s\)/, '');
 
 
-  });
+    console.log('F: ' + food);
+    console.log(amount);
+    console.log(measurementUnit);
+    console.log(measure);
 
-  // if (data.calories) {
-  //   var calories = document.createElement("p");
-  //   calories.textContent = "Calories " + Math.round(data.calories, 2);
-  //   resultsE1.appendChild(calories);
-  // } else {
-  //   var calories = document.createElement("p");
-  //   satFat.textContent = "Calories  - ";
-  //   resultsE1.appendChild(calories);
-  // }
+    console.log(typeof food);
+    console.log(typeof amount);
+    console.log(typeof measure);
+
+    getFoodInfo(food, amount, measure);
+  })
+});

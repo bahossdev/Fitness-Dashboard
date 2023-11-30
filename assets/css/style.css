@@ -68,6 +68,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
 .form {
@@ -100,6 +101,19 @@ body {
 .btn {
   margin-top: 20px;
   font-weight: bold;
+  box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
+  color: rgb(161, 161, 161);
+  cursor: pointer;
+}
+
+.history-item {
+  border-radius: 2rem;
+  margin: 6px;
+  padding: 5px;
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-weight: 100;
+  color:#212121;
+  border: 1px solid grey;
   box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
   color: rgb(161, 161, 161);
   cursor: pointer;
@@ -213,22 +227,22 @@ button {
 
 .cards {
   display: flex;
-  flex-direction: column;
-  gap: 15px;
+  justify-content: center;
+  gap: 70px;
   align-items: center;
 }
 
 .cards .red {
-  background-color: #f43f5e;
+  background-color: #D281B5;
 }
 
 .cards .white {
-  background-color: #f8f8f8;
+  background-color: #9F2C75;
   color: black;
 }
 
 .cards .blue {
-  background-color: #3b22c5;
+  background-color: #560238;
 }
 
 .cards .card {
@@ -247,6 +261,8 @@ button {
 
 .cards .card p.tip {
   font-size: 25px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  padding: 10px;
 }
 
 .cards .card p.second-text {
