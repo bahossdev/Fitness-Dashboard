@@ -14,7 +14,7 @@
         <section class="EMOJIS">
 
             <div class=" flex justify-center items-center rounded-3xl">
-                <a href="#food">
+                <a href="#foodTop">
                     <svg y="0" xmlns="http://www.w3.org/2000/svg" x="0" width="100" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid meet" height="100" class="w-5 h-5 fill-red-500 animate-bounce">
                         <path fill-rule="evenodd"
@@ -23,7 +23,7 @@
                         </path>
                     </svg>
                 </a>
-                <a href="#tdee">
+                <a href="#tdeeTop">
                     <svg y="0" xmlns="http://www.w3.org/2000/svg" x="0" width="100" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid meet" height="100" class="w-5 h-5 fill-current">
                         <path
@@ -32,7 +32,7 @@
                         </path>
                     </svg>
                 </a>
-                <a href="#activity">
+                <a href="#activityTop">
                     <svg y="0" xmlns="http://www.w3.org/2000/svg" x="0" width="100" viewBox="0 0 100 100"
                         preserveAspectRatio="xMidYMid meet" height="100" class="w-5 h-5 fill-current">
                         <path fill-rule="evenodd"
@@ -71,8 +71,8 @@
         <div class="container column form-container">
 
             <!-- Food form -->
-            <form action="" class="form foodForm">
-                <div class="logo" id="food">Nutrition Info</div>
+            <form action="" class="form foodForm" id="foodTop">
+                <a href="#foodTop" style="text-decoration: none;"><div class="logo form-name" id="food">Nutrition Info</div></a>
                 <input type="text" id="food-input" class="input foodText" required="" placeholder="Enter food name">
                 <input type="text" id="amount" class="input foodInput" required placeholder="Enter number">
                 <select type="select" id="foodType" required class="input">
@@ -84,15 +84,15 @@
                     <option class="measure" value="unit">unit</option>
                 </select>
                 <input type="submit" value="Get Nutritions Info" class="input submit">
-                <div class="input" id="foodResults"></div>
+                <div class="input hidden" id="foodResults"></div>
                 <div class="or">or</div>
                 <div class="input btn">Food Search History</div>
             </form>
 
             <!-- TDEE form -->
-            <form action="" class="form tdeeForm">
-                <div class="logo" id="tdee">TDEE</div>
-                <p style="font-size: 24px">Total Daily Energy Expenditure</p>
+            <form action="" class="form tdeeForm" id="tdeeTop">
+                <a href="#tdeeTop" style="text-decoration: none;"><div class="logo form-name" id="tdee">TDEE</div></a>
+                <p class="tdeeDscrp">Total Daily Energy Expenditure</p>
                 <input type="text" id='weight' class="input weight" required placeholder="Enter weight (kg)">
                 <input type="text" id='height' class="input height" required placeholder="Enter height (cm)">
                 <input type="text" id="age" class="input" required placeholder="Enter age">
@@ -113,16 +113,16 @@
                     <option value="va">Heavy Exercise (6-7 days/week)</option>
                 </select>
                 <input type="submit" value="Calculate TDEE" class="input submit">
-                <div class="input" id="tdeeResults"></div>
+                <div class="input hidden" id="tdeeResults"></div>
             </form>
 
             <!-- Activity form -->
-            <form action="" class="form activityForm">
-                <div class="logo" id="activity">Activity</div>
+            <form action="" class="form activityForm" id="activityTop">
+                <a href="#activityTop" style="text-decoration: none;"><div class="logo form-name" id="activity2">Activity</div></a>
                 <input type="text" id="activity-input" class="input activityText" required placeholder="Enter activity">
                 <input type="text" id="duration" class="input" required placeholder="Enter duration in minutes">
                 <input type="submit" value="Search" class="input submit">
-                <div class="input" id="results"></div>
+                <div class="input hidden" id="activityResults"></div>
             </form>
 
     </div>
