@@ -8,7 +8,9 @@ let heightEl = document.querySelector(".height");
 let ageEl = document.getElementById("age");
 let genderEl = document.getElementById("gender");
 let activityEl = document.getElementById("activity");
-let resultsEl = document.getElementById("results");
+let foodResultsEl = document.getElementById("foodResults");
+let tdeeResultsEl = document.getElementById("tdeeResults");
+
 
 // Run if ready
 $(document).ready(function () {
@@ -121,33 +123,33 @@ $(document).ready(function () {
     let APIKey = "b5e2ab46de743f89705388baac3abb12";
     let APIId = "b84dedab";
 
-  
-      // Fetch for food info
-      let requestUrl =
-        "https://api.edamam.com/api/nutrition-data?app_id=" +
-        APIId +
-        "&app_key=" +
-        APIKey +
-        "&nutrition-type=cooking&ingr=" +
-        amount + '%20' + measure + '%20' + food;
 
-      fetch(requestUrl)
-        .then(function (response) {
-          if (response.ok) {
-            response.json().then(function (data) {
-              console.log(data.calories);
-              console.log(data.totalDaily);
-              displayFoodResult(data, food, amount, measure);
-            });
-          } else {
-            alert("Error: " + response.statusText);
-          }
-        })
-        .catch(function (error) {
-          alert("Unable to connect to the server");
-        });
-     // Store to local, avoid repetitive input 
-     let foodObject = {
+    // Fetch for food info
+    let requestUrl =
+      "https://api.edamam.com/api/nutrition-data?app_id=" +
+      APIId +
+      "&app_key=" +
+      APIKey +
+      "&nutrition-type=cooking&ingr=" +
+      amount + '%20' + measure + '%20' + food;
+
+    fetch(requestUrl)
+      .then(function (response) {
+        if (response.ok) {
+          response.json().then(function (data) {
+            console.log(data.calories);
+            console.log(data.totalDaily);
+            displayFoodResult(data, food, amount, measure);
+          });
+        } else {
+          alert("Error: " + response.statusText);
+        }
+      })
+      .catch(function (error) {
+        alert("Unable to connect to the server");
+      });
+    // Store to local, avoid repetitive input 
+    let foodObject = {
       foodName: food,
       quantity: amount,
       measurementUnit: measure,
@@ -204,35 +206,35 @@ $(document).ready(function () {
       }
     });
 
-        // Store to local, avoid repetitive input 
-        let tdeeObject = {
-          weight: weight,
-          height: height,
-          age: age,
-          gender: gender,
-          activityLevel: activityLevel,
-        }
-    
-        // check for exisiting 
-        let savedTDEEs = JSON.parse(localStorage.getItem('tdeeObject')) || [];
-        if (savedTDEEs.length >= 10) {
-          savedTDEEs.shift();
-        }
-    
-        let itemExists = savedTDEEs.some(savedTDEE =>
-          savedTDEE.weight === tdeeObject.weight &&
-          savedTDEE.height === tdeeObject.height &&
-          savedTDEE.age === tdeeObject.age &&
-          savedTDEE.gender === tdeeObject.gender &&
-          savedTDEE.activityLevel === tdeeObject.activityLevel
-        );
-    
-        if (!itemExists) {
-          savedTDEEs.push(tdeeObject);
-    
-          localStorage.setItem('tdeeObject', JSON.stringify(savedTDEEs));
-        }
-    
+    // Store to local, avoid repetitive input 
+    let tdeeObject = {
+      weight: weight,
+      height: height,
+      age: age,
+      gender: gender,
+      activityLevel: activityLevel,
+    }
+
+    // check for exisiting 
+    let savedTDEEs = JSON.parse(localStorage.getItem('tdeeObject')) || [];
+    if (savedTDEEs.length >= 10) {
+      savedTDEEs.shift();
+    }
+
+    let itemExists = savedTDEEs.some(savedTDEE =>
+      savedTDEE.weight === tdeeObject.weight &&
+      savedTDEE.height === tdeeObject.height &&
+      savedTDEE.age === tdeeObject.age &&
+      savedTDEE.gender === tdeeObject.gender &&
+      savedTDEE.activityLevel === tdeeObject.activityLevel
+    );
+
+    if (!itemExists) {
+      savedTDEEs.push(tdeeObject);
+
+      localStorage.setItem('tdeeObject', JSON.stringify(savedTDEEs));
+    }
+
   }
 
   // Fetch data for activity search
@@ -254,23 +256,23 @@ $(document).ready(function () {
   // Display the search result for Nutrients Info
   function displayFoodResult(data, food, amount, measure) {
     // Extract relevant information from the API response
-    while (resultsEl.firstChild) {
-      resultsEl.removeChild(resultsEl.firstChild);
+    while (foodResultsEl.firstChild) {
+      foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
 
     let foodInfo = document.createElement("h3");
     let capFood = food.charAt(0).toUpperCase() + food.slice(1);
     foodInfo.textContent = capFood + ', ' + amount + ' ' + measure + '(s)';
-    resultsEl.appendChild(foodInfo);
+    foodResultsEl.appendChild(foodInfo);
 
     if (data.calories) {
       let calories = document.createElement("p");
       calories.textContent = "Calories " + Math.round(data.calories, 2);
-      resultsEl.appendChild(calories);
+      foodResultsEl.appendChild(calories);
     } else {
       let calories = document.createElement("p");
       calories.textContent = "Calories  - ";
-      resultsEl.appendChild(calories);
+      foodResultsEl.appendChild(calories);
     }
 
 
@@ -281,11 +283,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.FAT.quantity, 2) +
         data.totalDaily.FAT.unit;
-      resultsEl.appendChild(Fat);
+      foodResultsEl.appendChild(Fat);
     } else {
       let Fat = document.createElement("p");
       Fat.textContent = "Fat - ";
-      resultsEl.appendChild(Fat);
+      foodResultsEl.appendChild(Fat);
     }
 
     if (data.totalDaily.FASAT) {
@@ -295,11 +297,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.FASAT.quantity, 2) +
         data.totalDaily.FASAT.unit;
-      resultsEl.appendChild(satFat);
+      foodResultsEl.appendChild(satFat);
     } else {
       let satFat = document.createElement("p");
       satFat.textContent = "Saturated  - ";
-      resultsEl.appendChild(satFat);
+      foodResultsEl.appendChild(satFat);
     }
 
     if (data.totalDaily.CHOCDF) {
@@ -309,11 +311,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.CHOCDF.quantity, 2) +
         data.totalDaily.CHOCDF.unit;
-      resultsEl.appendChild(carb);
+      foodResultsEl.appendChild(carb);
     } else {
       let carb = document.createElement("p");
       carb.textContent = "Carbs   -";
-      resultsEl.appendChild(carb);
+      foodResultsEl.appendChild(carb);
     }
     if (data.totalDaily.PROCNT) {
       let protein = document.createElement("p");
@@ -322,11 +324,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.PROCNT.quantity, 2) +
         data.totalDaily.PROCNT.unit;
-      resultsEl.appendChild(protein);
+      foodResultsEl.appendChild(protein);
     } else {
       let protein = document.createElement("p");
       protein.textContent = "protein   -";
-      resultsEl.appendChild(protein);
+      foodResultsEl.appendChild(protein);
     }
     if (data.totalDaily.VITA_RAE) {
       let vitA = document.createElement("p");
@@ -335,11 +337,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.VITA_RAE.quantity, 2) +
         data.totalDaily.VITA_RAE.unit;
-      resultsEl.appendChild(vitA);
+      foodResultsEl.appendChild(vitA);
     } else {
       let vitA = document.createElement("p");
       vitA.textContent = "Vitamin A   - ";
-      resultsEl.appendChild(vitA);
+      foodResultsEl.appendChild(vitA);
     }
     if (data.totalDaily.VITC) {
       let vitC = document.createElement("p");
@@ -348,11 +350,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.VITC.quantity, 2) +
         data.totalDaily.VITC.unit;
-      resultsEl.appendChild(vitC);
+      foodResultsEl.appendChild(vitC);
     } else {
       let vitC = document.createElement("p");
       vitC.textContent = "Vitamin C  - ";
-      resultsEl.appendChild(vitC);
+      foodResultsEl.appendChild(vitC);
     }
     if (data.totalDaily.VITD) {
       let vitD = document.createElement("p");
@@ -361,11 +363,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.VITD.quantity, 2) +
         data.totalDaily.VITD.unit;
-      resultsEl.appendChild(vitD);
+      foodResultsEl.appendChild(vitD);
     } else {
       let vitD = document.createElement("p");
       vitD.textContent = "Vitamin D -";
-      resultsEl.appendChild(vitD);
+      foodResultsEl.appendChild(vitD);
     }
 
     if (data.totalDaily.CA) {
@@ -375,11 +377,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.CA.quantity, 2) +
         data.totalDaily.CA.unit;
-      resultsEl.appendChild(calcium);
+      foodResultsEl.appendChild(calcium);
     } else {
       let calcium = document.createElement("p");
       calcium.textContent = "calcium  -";
-      resultsEl.appendChild(calcium);
+      foodResultsEl.appendChild(calcium);
     }
     if (data.totalDaily.K) {
       let potassium = document.createElement("p");
@@ -388,11 +390,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.K.quantity, 2) +
         data.totalDaily.K.unit;
-      resultsEl.appendChild(potassium);
+      foodResultsEl.appendChild(potassium);
     } else {
       let potassium = document.createElement("p");
       potassium.textContent = "potassium  -";
-      resultsEl.appendChild(potassium);
+      foodResultsEl.appendChild(potassium);
     }
     if (data.totalDaily.FE) {
       let iron = document.createElement("p");
@@ -401,11 +403,11 @@ $(document).ready(function () {
         " " +
         Math.round(data.totalDaily.FE.quantity, 2) +
         data.totalDaily.FE.unit;
-      resultsEl.appendChild(iron);
+      foodResultsEl.appendChild(iron);
     } else {
       let iron = document.createElement("p");
       iron.textContent = "iron  -";
-      resultsEl.appendChild(iron);
+      foodResultsEl.appendChild(iron);
     }
   }
 
@@ -413,8 +415,8 @@ $(document).ready(function () {
   function displayTDEEResult(data, weight, height, age, gender, activityLevel) {
 
     // Extract relevant information from the API response
-    while (resultsEl.firstChild) {
-      resultsEl.removeChild(resultsEl.firstChild);
+    while (tdeeResultsEl.firstChild) {
+      tdeeResultsEl.removeChild(tdeeResultsEl.firstChild);
     }
 
     let activitiyText;
@@ -428,23 +430,60 @@ $(document).ready(function () {
       activitiyText = "Heavy Exercise (6-7 days/week)"
     }
 
-    let TDEEInfo = document.createElement("h3");
-    TDEEInfo.textContent = gender + ', ' +
-      weight + ' kg, ' +
-      height + ' cm, ' +
-      age + ' years, ' +
-      activitiyText;
+    // let TDEEInfo = document.createElement("h3");
+    // TDEEInfo.textContent = gender + ', ' +
+    //   weight + ' kg, ' +
+    //   height + ' cm, ' +
+    //   age + ' years, ' +
+    //   activitiyText;
 
-    resultsEl.appendChild(TDEEInfo);
+    // tdeeResultsEl.appendChild(TDEEInfo);
+
+    // if (data.info.tdee) {
+    //   let TDEE = document.createElement("p");
+    //   TDEE.textContent = "Total Daily Energy Expenditure: " +
+    //     Math.round(data.info.tdee, 2) +
+    //     ' calories per day';
+    //   tdeeResultsEl.appendChild(TDEE);
+
+    // }
+    let TDEEInfo = document.createElement("ul");
+
+    TDEEInfo.style.listStyleType = "none";
+    let genderItem = document.createElement("li");
+    genderItem.textContent = "Gender: " + gender;
+    TDEEInfo.appendChild(genderItem);
+
+    let weightItem = document.createElement("li");
+    weightItem.textContent = "Weight: " + weight + " kg";
+    TDEEInfo.appendChild(weightItem);
+
+    let heightItem = document.createElement("li");
+    heightItem.textContent = "Height: " + height + " cm";
+    TDEEInfo.appendChild(heightItem);
+
+    let ageItem = document.createElement("li");
+    ageItem.textContent = "Age: " + age + " years";
+    TDEEInfo.appendChild(ageItem);
+
+    let activityItem = document.createElement("li");
+    activityItem.textContent = "Activity Level: " + activitiyText;
+    TDEEInfo.appendChild(activityItem);
+
+    tdeeResultsEl.appendChild(TDEEInfo);
 
     if (data.info.tdee) {
-      let TDEE = document.createElement("p");
-      TDEE.textContent = "Total Daily Energy Expenditure: " +
-        Math.round(data.info.tdee, 2) +
-        ' calories per day';
-      resultsEl.appendChild(TDEE);
-
+      let TDEE = createListItem("Total Daily Energy Expenditure: " +
+        "<strong>" + Math.round(data.info.tdee, 2) + " calories per day</strong>");
+      TDEEInfo.appendChild(TDEE);
     }
+    
+    function createListItem(content) {
+      let listItem = document.createElement("li");
+      listItem.innerHTML = content;
+      return listItem;
+    }
+
   }
 
 
@@ -455,8 +494,8 @@ $(document).ready(function () {
       savedFoods.shift();
     }
 
-    while (resultsEl.firstChild) {
-      resultsEl.removeChild(resultsEl.firstChild);
+    while (foodResultsEl.firstChild) {
+      foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
 
     for (let i = 0; i < savedFoods.length; i++) {
@@ -470,7 +509,7 @@ $(document).ready(function () {
         getFoodInfo(savedFoods[i].foodName, savedFoods[i].quantity, savedFoods[i].measurementUnit);
       });
 
-      resultsEl.appendChild(historyItem);
+      foodResultsEl.appendChild(historyItem);
 
       //   }
       // }
