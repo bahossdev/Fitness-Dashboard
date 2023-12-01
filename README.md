@@ -41,6 +41,7 @@ N/A
 
 - HTML, CSS, JavaScript
 - jQuery - JavaScript library
+- Google Fonts
 - Edamam API - Nutrition Analysis API
 - API Ninjas - Calories burned API
 - Mega Fitness Calculator - TDEE API
