@@ -11,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   /* Basic dimensions and centering */
   width: 100%;
   height: 100%;
@@ -35,6 +36,14 @@ body {
   animation: move 4s linear infinite;
 }
 
+aside {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
 @keyframes move {
   0% {
     background-position: 0 0;
@@ -57,17 +66,15 @@ body {
   border-radius: 30px;
   background: #212121;
   box-shadow: 4px 4px 18px rgb(255, 196, 240), -15px -15px 30px rgb(60, 60, 60);
-}
-
-.container {
-  height: 100%;
-  width: 100%;
+  border: 2px solid;
+  margin-bottom: 30px;
 }
 
 .form-container {
-  margin-top: 55px;
+  margin-top: 30px;
   padding: 60px 20px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -85,15 +92,14 @@ body {
 }
 
 .form:hover {
-  padding: 47px;
-  box-shadow: 2px 2px 10px rgb(251, 199, 238);
+  box-shadow: inset 8px 8px 25px rgba(45, 38, 45, 0.767);
   transition: all 0.5s ease-in-out;
-  border: none;
 }
 
 form .form-name {
   font-size: 2rem;
   color: #560238;
+  text-align: center;
 }
 
 form .form-name:hover {
@@ -118,11 +124,11 @@ h3 {
 }
 
 .input {
-  padding: 1rem 1.2rem;
+  padding: 0.5rem 1.2rem;
   margin: 1rem;
   border-radius: 2rem;
   display: block;
-  width: 80%;
+  width: 70%;
   border: none;
   box-shadow: inset 6px 6px 8px rgba(97, 97, 97, 0.075),
     6px 6px 6px rgba(255, 255, 255, 0.781);
@@ -132,13 +138,29 @@ h3 {
   font-size: inherit;
 }
 
+.input-text:focus {
+  box-shadow: inset 6px 6px 8px rgba(115, 115, 115, 0.593);
+  background-color: whitesmoke;
+}
+
 .submit,
 .btn {
   margin-top: 20px;
   font-weight: bold;
   box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
-  color: rgb(161, 161, 161);
+  color: white;
   cursor: pointer;
+  background-color: #9F2C75;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.submit:hover,
+.btn:hover {
+  background-color: #c674a8;
+  color:#212121;
+  box-shadow:-3px -3px 5px rgb(60, 60, 60);
 }
 
 .history-item {
@@ -153,7 +175,6 @@ h3 {
   font-size: 1rem;
   padding: 5px;
   background-color: #c798b7;
-  color: #212121;
   box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
   cursor: pointer;
 }
@@ -172,7 +193,8 @@ h3 {
 
 .btn {
   text-align: center;
-  color: black;
+  color: white;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .logo {
@@ -215,10 +237,9 @@ h3 {
   right: 100%;
 }
 
-.or::after {}
-
 .EMOJIS svg {
-  filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814)) drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
+  filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814)) 
+  drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
 }
 
 .parent {
@@ -267,10 +288,11 @@ button {
 
 .SOCIALS {
   background-color: lightpink;
-  border: 5px solid;
+  border: 3px solid;
   border-radius: 20px;
   margin-top: 20px;
   margin-bottom: 20px;
+  box-shadow: 4px 4px 18px rgb(255, 196, 240), -15px -15px 30px rgb(60, 60, 60);
 }
 
 .flex {
@@ -278,24 +300,39 @@ button {
   justify-content: center;
 }
 
-.cards {
-  display: flex;
-  justify-content: center;
-  gap: 70px;
-  align-items: center;
-}
 
 .cards .red {
-  background-color: #D281B5;
+  padding: 5px;
+  background-color: #d281b5;
 }
 
 .cards .white {
-  background-color: #9F2C75;
+  background-color: #9f2c75;
   color: black;
 }
 
 .cards .blue {
   background-color: #560238;
+}
+
+.text-1 {
+  font-size: 25px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  padding: 10px;
+}
+
+.text-2 {
+  font-size: 25px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  padding: 10px;
+  color: white;
+}
+
+.text-3 {
+  font-size: 25px;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  padding: 10px;
+  color: white;
 }
 
 .cards .card {
@@ -304,17 +341,22 @@ button {
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
   height: 200px;
   width: 300px;
   border-radius: 10px;
   color: rgb(1, 1, 1);
   cursor: pointer;
   transition: 400ms;
+  border-radius: 40px;
+  border: 3px solid;
 }
 
 .cards .card p.tip {
   font-size: 25px;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
+    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   padding: 10px;
 }
 
@@ -324,6 +366,8 @@ button {
 
 .cards .card:hover {
   transform: scale(1.1, 1.1);
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .cards:hover>.card:not(:hover) {
@@ -704,4 +748,72 @@ button {
 .HAMSTER {
   display: flex;
   justify-content: center;
+}
+
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  padding-top: 180px; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #f5d6e7;
+  margin: auto;
+  padding: 30px;
+  border: 1px solid #888;
+  width: 20%;
+  height: 10%;
+  border-radius: 15px;
+  font-size: 1.1rem;
+}
+
+/* The Close Button */
+.close {
+  color: #aaaaaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: #5d0d5e;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 480px) {
+  .input {
+    font-size: 1.3rem;
+  }
+  
+  .submit,
+  .btn {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  font-size: 1rem;
+  border: 5px solid;
+  padding: 40px;
+  background-color: lightpink;
+  border-radius: 40px;
+}
+.hidden {
+  display: none;
+}
 }
