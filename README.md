@@ -6,7 +6,7 @@ Dashboard on Nutrition Intake and Calories Burned
 
 A Fitness dashboard
 
-- To learn the Nutrition information of various foods and recipes.
+- To learn about the nutrition information of various foods and recipes.
 - To track the total daily energy expenditure and calories burnt for the activities done.
 
 ## Features
@@ -27,7 +27,7 @@ N/A
 - Enter the food name, number and units.
 - Click the "Get Nutritions Info" button or press Enter to view nutrition Information.
 - Click the "Food Search History" to view previous food search history.
-- Click on previous food search history to view nutrition Information.
+- Click on previous food search history to view nutrition information.
 
 # Total Daily Energy Expenditure
 
@@ -55,8 +55,11 @@ Please refer to the LICENSE in the repo.
 
 ## Link to deployed application:
 
+https://bahossdev.github.io/Fitness-Dashboard/
+
 ## Link to the Repository:
 
 https://github.com/bahossdev/Fitness-Dashboard
 
 ## Screenshot:
+![Screenshot](https://github.com/bahossdev/Fitness-Dashboard/assets/148646212/79ceefce-c6aa-4890-bf5e-6695abc4517b)
