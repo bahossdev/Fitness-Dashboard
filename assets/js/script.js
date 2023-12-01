@@ -12,11 +12,10 @@ let foodResultsEl = document.getElementById("foodResults");
 let tdeeResultsEl = document.getElementById("tdeeResults");
 let activityTextEl = document.querySelector(".activityText");
 let durationEl = document.getElementById("duration");
-let activityResultsEl = document.getElementById("activityResults")
+let activityResultsEl = document.getElementById("activityResults");
 let alertEl = document.getElementById("alert");
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
-
 
 // Run if ready
 $(document).ready(function () {
@@ -63,7 +62,7 @@ $(document).ready(function () {
     if (!foodText || !amount || !measureEl) {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
-      foodResultsEl.removeChild(foodResultsEl.firstChild);
+      return;
     }
     if (isNaN(amount)) {
       alertEl.textContent = "Please enter a number!";
@@ -87,7 +86,7 @@ $(document).ready(function () {
     if (!weight || !height || !age || !gender || !activityLevel) {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
-      tdeeResultsEl.removeChild(foodResultsEl.firstChild);
+      return;
     } else if (isNaN(weight) || isNaN(height) || isNaN(age)) {
       alertEl.textContent = "Please enter a number!";
       modal.style.display = "block";
@@ -123,11 +122,10 @@ $(document).ready(function () {
       $("#duration").val("");
     }
   }
-  // Event Handler for saved food searches 
+  // Event Handler for saved food searches
   $(".foodForm .btn").on("click", function () {
     getFoodHistory();
   });
-
 
   // Fetch data for food search and store to local storage as foodObject
   function getFoodInfo(food, amount, measure) {
@@ -166,7 +164,6 @@ $(document).ready(function () {
   }
 
   function saveFoodInfo(food, amount, measure) {
-
     let foodObject = {
       foodName: food,
       quantity: amount,
@@ -178,12 +175,13 @@ $(document).ready(function () {
       savedFoods.shift();
     }
 
-    // check for exisiting 
-    let itemExists = savedFoods.some(savedFood =>
-      savedFood.foodName.toUpperCase() === foodObject.foodName.toUpperCase() &&
-      savedFood.quantity == foodObject.quantity &&
-      savedFood.measurementUnit === foodObject.measurementUnit
-
+    // check for exisiting
+    let itemExists = savedFoods.some(
+      (savedFood) =>
+        savedFood.foodName.toUpperCase() ===
+          foodObject.foodName.toUpperCase() &&
+        savedFood.quantity == foodObject.quantity &&
+        savedFood.measurementUnit === foodObject.measurementUnit
     );
 
     if (!itemExists) {
@@ -274,7 +272,7 @@ $(document).ready(function () {
     while (foodResultsEl.firstChild) {
       foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
-    foodResultsEl.classList.remove('hidden');
+    foodResultsEl.classList.remove("hidden");
     let foodInfo = document.createElement("h3");
     let capFood = food.charAt(0).toUpperCase() + food.slice(1);
     foodInfo.textContent = capFood + ", " + amount + " " + measure + "(s)";
@@ -427,21 +425,20 @@ $(document).ready(function () {
 
   // Display the search result for Nutrients Info
   function displayTDEEResult(data, weight, height, age, gender, activityLevel) {
-
     // Extract relevant information from the API response
     while (tdeeResultsEl.firstChild) {
       tdeeResultsEl.removeChild(tdeeResultsEl.firstChild);
     }
-    tdeeResultsEl.classList.remove('hidden');
+    tdeeResultsEl.classList.remove("hidden");
     let activitiyText;
-    if (activityLevel == 'se') {
-      activitiyText = "Sedentary (office job)"
-    } else if (activityLevel == 'la') {
-      activitiyText = "Light Exercise (1-2 days/week)"
-    } else if (activityLevel == 'ma') {
-      activitiyText == "Moderate Exercise (3-5 days/week)"
+    if (activityLevel == "se") {
+      activitiyText = "Sedentary (office job)";
+    } else if (activityLevel == "la") {
+      activitiyText = "Light Exercise (1-2 days/week)";
+    } else if (activityLevel == "ma") {
+      activitiyText == "Moderate Exercise (3-5 days/week)";
     } else {
-      activitiyText == "Heavy Exercise (6-7 days/week)"
+      activitiyText == "Heavy Exercise (6-7 days/week)";
     }
 
     let TDEEInfo = document.createElement("ul");
@@ -470,8 +467,12 @@ $(document).ready(function () {
     tdeeResultsEl.appendChild(TDEEInfo);
 
     if (data.info.tdee) {
-      let TDEE = createListItem("TDEE: " +
-        "<strong>" + Math.round(data.info.tdee, 2) + " calories/day</strong>");
+      let TDEE = createListItem(
+        "TDEE: " +
+          "<strong>" +
+          Math.round(data.info.tdee, 2) +
+          " calories/day</strong>"
+      );
       TDEEInfo.appendChild(TDEE);
     }
 
@@ -480,19 +481,18 @@ $(document).ready(function () {
       listItem.innerHTML = content;
       return listItem;
     }
-
   }
-
 
   function displayActivityResult(data, activityText, duration) {
     // Extract relevant information from the API response
     while (activityResultsEl.firstChild) {
       activityResultsEl.removeChild(activityResultsEl.firstChild);
     }
-    activityResultsEl.classList.remove('hidden');
+    activityResultsEl.classList.remove("hidden");
     let activityInfo = document.createElement("h3");
-    let capActivity = activityText.charAt(0).toUpperCase() + activityText.slice(1);
-    activityInfo.textContent = capActivity + ', ' + duration + ' minutes';
+    let capActivity =
+      activityText.charAt(0).toUpperCase() + activityText.slice(1);
+    activityInfo.textContent = capActivity + ", " + duration + " minutes";
     activityResultsEl.appendChild(activityInfo);
 
     let avtivityInfoList = document.createElement("ul");
@@ -505,7 +505,7 @@ $(document).ready(function () {
       if (data[i]) {
         let activityItem = document.createElement("li");
         let fullActivityName = data[i].name;
-        let activityParts = fullActivityName.split('(');
+        let activityParts = fullActivityName.split("(");
         let trimmedName = activityParts[0].trim();
 
         let activityTextSpan = document.createElement("span");
@@ -539,7 +539,7 @@ $(document).ready(function () {
     while (foodResultsEl.firstChild) {
       foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
-    foodResultsEl.classList.remove('hidden');
+    foodResultsEl.classList.remove("hidden");
 
     for (let i = 0; i < savedFoods.length; i++) {
       let historyItem = document.createElement("button");
@@ -551,18 +551,17 @@ $(document).ready(function () {
   }
 
   // Event Handler for saved foods buttons
-  $(document).on('click', '.history-item', function (event) {
+  $(document).on("click", ".history-item", function (event) {
     event.preventDefault();
     let selectedFood = $(event.target).text();
     let clickedFood = selectedFood.split(", ");
     let food = clickedFood[0];
-    let amount = Number(clickedFood[1].split(' ')[0]);
-    let measurementUnit = clickedFood[1].split(' ')[1]
-    let measure = measurementUnit.replace(/\(s\)/, '');
+    let amount = Number(clickedFood[1].split(" ")[0]);
+    let measurementUnit = clickedFood[1].split(" ")[1];
+    let measure = measurementUnit.replace(/\(s\)/, "");
 
     getFoodInfo(food, amount, measure);
-  })
-
+  });
 });
 
 span.onclick = function () {
