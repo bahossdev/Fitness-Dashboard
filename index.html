@@ -4,6 +4,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Links to Google Fonts and CSS styling -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css" />
     <title>Fitness Dashboard</title>
 </head>
@@ -55,12 +60,11 @@
             <p class="second-text"></p>
         </div>
         <div class="card white">
-            <p class="text-2">A balanced diet
-                is essential for the overall health.</p>
+            <p class="text-2">A balanced diet is essential for the overall health.</p>
             <p class="second-text"></p>
         </div>
         <div class="card blue">
-            <p class="text-3">Quality sleep is important for physical and mental health.</p>
+            <p class="text-3">Your body naturally burns 1,300 to 2,000 calories daily without any activity.</p>
             <p class="second-text"></p>
         </div>
     </aside>
@@ -73,7 +77,8 @@
             <a href="#foodTop" style="text-decoration: none;">
                 <div class="logo form-name" id="food">Nutrition Info</div>
             </a>
-            <input type="text" id="food-input" class="input input-text foodText" required="" placeholder="Enter food name">
+            <input type="text" id="food-input" class="input input-text foodText" required=""
+                placeholder="Enter food name">
             <input type="text" id="amount" class="input input-text foodInput" required placeholder="Enter number">
             <select type="select" id="foodType" required class="input">
                 <option>Choose an option</option>
@@ -123,7 +128,8 @@
             <a href="#activityTop" style="text-decoration: none;">
                 <div class="logo form-name" id="activity2">Activity</div>
             </a>
-            <input type="text" id="activity-input" class="input-text input activityText" required placeholder="Enter activity">
+            <input type="text" id="activity-input" class="input-text input activityText" required
+                placeholder="Enter activity">
             <input type="text" id="duration" class="input" required placeholder="Enter duration (mins) ">
             <input type="submit" value="Search" class="input submit">
             <div class="input hidden" id="activityResults"></div>

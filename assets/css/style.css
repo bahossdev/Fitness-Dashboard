@@ -303,35 +303,38 @@ button {
 
 .cards .red {
   padding: 5px;
+  font-family: 'Satisfy', cursive;
   background-color: #d281b5;
 }
 
 .cards .white {
   background-color: #9f2c75;
+  font-family: 'Satisfy', cursive;
   color: black;
 }
 
 .cards .blue {
   background-color: #560238;
+  font-family: 'Satisfy', cursive;
 }
 
 .text-1 {
-  font-size: 25px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  font-size: 28px;
+  font-family: 'Satisfy', cursive;
   padding: 10px;
 }
 
 .text-2 {
-  font-size: 25px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  padding: 10px;
+  font-size: 28px;
+  font-family: 'Satisfy', cursive;
+    padding: 10px;
   color: white;
 }
 
 .text-3 {
-  font-size: 25px;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  padding: 10px;
+  font-size: 28px;
+  font-family: 'Satisfy', cursive;
+    padding: 10px;
   color: white;
 }
 
@@ -355,8 +358,7 @@ button {
 
 .cards .card p.tip {
   font-size: 25px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  font-family: 'Satisfy', cursive;
   padding: 10px;
 }
 
