@@ -11,16 +11,20 @@ A Fitness dashboard
 
 ## Features
 
-- **Nutrition Info:** Users can get nutrition information for the food for the selected quantity and serving size.
-- **Total Daily Energy Expenditure:** Users can calculate the TDEE upon entering mandatory values like age, weight, height etc.
-- **Activity:** Users can see the calories burnt for the activity done for a given duration.
-- **Food Search History:** Users can view previous food search history and click on the list to retrieve the nutrient information
+- **Nutrition Info:** User can get nutrition information for the food for the selected quantity and serving size.
+- **Total Daily Energy Expenditure:** User can calculate the TDEE upon entering mandatory values like age, weight, height etc.
+- **Activity:** User can see the calories burnt for the activity done for a given duration.
+- **Food Search History:** User can view previous food search history and click on the list to retrieve the nutrient information
+- **Navigation Shortcuts:** User can click on the emojis on top of the page, or the title of each form to navigate easily to the form.
+- **Modal Messages:** In case the user leaves a mandatory field blank or fills a numerical input with a letter, a modal will pop-up notifying the user.
 
 ## Installation
 
 N/A
 
 ## How to Use:
+
+- To navigate between page sections more easily (specially on smaller screens) click on the emojis or the title of each form to get to that form.
 
 # Nutrition Info
 
