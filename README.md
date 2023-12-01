@@ -24,7 +24,7 @@ N/A
 
 ## How to Use:
 
-- To navigate between page sections more easily (specially on smaller screens) click on the emojis or the title of each form to get to that form.
+- To navigate between page sections more easily (especially on smaller screens) click on the emojis or the title of each form to get to that form.
 
 # Nutrition Info
 
