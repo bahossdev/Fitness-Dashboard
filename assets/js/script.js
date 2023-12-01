@@ -59,7 +59,7 @@ $(document).ready(function () {
     let amount = amountEl.value;
     let measure = measureEl.value;
 
-    if (!foodText || !amount || !measureEl) {
+    if (!food || !amount || !measureEl) {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
       return;
