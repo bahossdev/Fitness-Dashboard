@@ -10,9 +10,13 @@ let genderEl = document.getElementById("gender");
 let activityEl = document.getElementById("activity");
 let foodResultsEl = document.getElementById("foodResults");
 let tdeeResultsEl = document.getElementById("tdeeResults");
+let activityTextEl = document.querySelector(".activityText");
+let durationEl = document.getElementById("duration");
+let activityResultsEl = document.getElementById("activityResults")
 let alertEl = document.getElementById("alert");
 var modal = document.getElementById("myModal");
 var span = document.getElementsByClassName("close")[0];
+
 
 // Run if ready
 $(document).ready(function () {
@@ -59,6 +63,7 @@ $(document).ready(function () {
     if (!foodText || !amount || !measureEl) {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
+      foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
     if (isNaN(amount)) {
       alertEl.textContent = "Please enter a number!";
@@ -79,25 +84,20 @@ $(document).ready(function () {
     let gender = genderEl.value;
     let activityLevel = activityEl.value;
 
-    if (!weight || !height || !age || !gender || !activityLevel) {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
+      tdeeResultsEl.removeChild(foodResultsEl.firstChild);
     }
     if (isNaN(weight) || isNaN(height) || isNaN(age)) {
       alertEl.textContent = "Please enter a number!";
       modal.style.display = "block";
     } else {
       getTDEE(weight, height, age, gender, activityLevel);
-      console.log(weight);
-      console.log(height);
-      console.log(age);
-      console.log(gender);
-      console.log(activityLevel);
       $(".weight").val("");
       $(".height").val("");
       $("#age").val("");
       $("#gender").val("Gender");
-      $("#activity").val("Please choose an activity level");
+      $("#activity").val("Choose an activity level");
     }
   }
 
@@ -108,20 +108,26 @@ $(document).ready(function () {
 
   function activitySearch() {
     event.preventDefault();
-    let activity = activityText.value;
+    let activityText = activityTextEl.value;
     let duration = durationEl.value;
 
-    if (!activityText || !durationEl) {
-      alertEl.textContent = "Please type a keyword!";
+    if (!activityText || !duration) {
+      alertEl.textContent = "Please fill all mandatory fields!";
+      modal.style.display = "block";
+    } else if (isNaN(duration)) {
+      alertEl.textContent = "Please enter a number!";
       modal.style.display = "block";
     } else {
-      getActivityInfo(activity, duration);
-      console.log(activity);
-      console.log(duration);
+      getActivityInfo(activityText, duration);
       $(".activityText").val("");
-      $("#duratiion").val("");
+      $("#duration").val("");
     }
   }
+  // Event Handler for saved food searches 
+  $(".foodForm .btn").on("click", function () {
+    getFoodHistory();
+  });
+
 
   // Fetch data for food search and store to local storage as foodObject
   function getFoodInfo(food, amount, measure) {
@@ -145,9 +151,8 @@ $(document).ready(function () {
       .then(function (response) {
         if (response.ok) {
           response.json().then(function (data) {
-            console.log(data.calories);
-            console.log(data.totalDaily);
             displayFoodResult(data, food, amount, measure);
+            saveFoodInfo(food, amount, measure);
           });
         } else {
           alertEl.textContent = "Error: " + response.statusText;
@@ -158,7 +163,10 @@ $(document).ready(function () {
         alertEl.textContent = "Unable to connect to the server";
         modal.style.display = "block";
       });
-    // Store to local, avoid repetitive input
+  }
+
+  function saveFoodInfo(food, amount, measure) {
+
     let foodObject = {
       foodName: food,
       quantity: amount,
@@ -170,13 +178,12 @@ $(document).ready(function () {
       savedFoods.shift();
     }
 
-    // check for exisiting
-    let itemExists = savedFoods.some(
-      (savedFood) =>
-        savedFood.foodName.toUpperCase() ===
-          foodObject.foodName.toUpperCase() &&
-        savedFood.quantity === foodObject.quantity &&
-        savedFood.measurementUnit === foodObject.measurementUnit
+    // check for exisiting 
+    let itemExists = savedFoods.some(savedFood =>
+      savedFood.foodName.toUpperCase() === foodObject.foodName.toUpperCase() &&
+      savedFood.quantity == foodObject.quantity &&
+      savedFood.measurementUnit === foodObject.measurementUnit
+
     );
 
     if (!itemExists) {
@@ -249,17 +256,14 @@ $(document).ready(function () {
   }
 
   // Fetch data for activity search
-  function getActivityInfo(activity, duration) {
+  function getActivityInfo(activityText, duration) {
     let APIKey = "WtIp1I8eoOwneW7Y533fWIk78SoMiG6rEKqV9OJR";
-    console.log(activity);
-    console.log(duration);
     baseUrl = "https://api.api-ninjas.com/v1/caloriesburned?activity=";
-    return fetch(baseUrl + activity + "&duration=" + duration, {
+    return fetch(baseUrl + activityText + "&duration=" + duration, {
       headers: { "x-api-key": APIKey },
     }).then((response) =>
       response.json().then(function (data) {
-        console.log(data);
-        // displayResult(data);
+        displayActivityResult(data, activityText, duration);
       })
     );
   }
@@ -270,7 +274,7 @@ $(document).ready(function () {
     while (foodResultsEl.firstChild) {
       foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
-
+    foodResultsEl.classList.remove('hidden');
     let foodInfo = document.createElement("h3");
     let capFood = food.charAt(0).toUpperCase() + food.slice(1);
     foodInfo.textContent = capFood + ", " + amount + " " + measure + "(s)";
@@ -337,7 +341,7 @@ $(document).ready(function () {
       foodResultsEl.appendChild(protein);
     } else {
       let protein = document.createElement("p");
-      protein.textContent = "protein   -";
+      protein.textContent = "Protein   -";
       foodResultsEl.appendChild(protein);
     }
     if (data.totalDaily.VITA_RAE) {
@@ -390,7 +394,7 @@ $(document).ready(function () {
       foodResultsEl.appendChild(calcium);
     } else {
       let calcium = document.createElement("p");
-      calcium.textContent = "calcium  -";
+      calcium.textContent = "Calcium  -";
       foodResultsEl.appendChild(calcium);
     }
     if (data.totalDaily.K) {
@@ -403,7 +407,7 @@ $(document).ready(function () {
       foodResultsEl.appendChild(potassium);
     } else {
       let potassium = document.createElement("p");
-      potassium.textContent = "potassium  -";
+      potassium.textContent = "Potassium  -";
       foodResultsEl.appendChild(potassium);
     }
     if (data.totalDaily.FE) {
@@ -416,7 +420,7 @@ $(document).ready(function () {
       foodResultsEl.appendChild(iron);
     } else {
       let iron = document.createElement("p");
-      iron.textContent = "iron  -";
+      iron.textContent = "Iron  -";
       foodResultsEl.appendChild(iron);
     }
   }
@@ -427,7 +431,7 @@ $(document).ready(function () {
     while (tdeeResultsEl.firstChild) {
       tdeeResultsEl.removeChild(tdeeResultsEl.firstChild);
     }
-
+    tdeeResultsEl.classList.remove('hidden');
     let activitiyText;
     if ((activityLevel = "se")) {
       activitiyText = "Sedentary (office job)";
@@ -439,23 +443,6 @@ $(document).ready(function () {
       activitiyText = "Heavy Exercise (6-7 days/week)";
     }
 
-    // let TDEEInfo = document.createElement("h3");
-    // TDEEInfo.textContent = gender + ', ' +
-    //   weight + ' kg, ' +
-    //   height + ' cm, ' +
-    //   age + ' years, ' +
-    //   activitiyText;
-
-    // tdeeResultsEl.appendChild(TDEEInfo);
-
-    // if (data.info.tdee) {
-    //   let TDEE = document.createElement("p");
-    //   TDEE.textContent = "Total Daily Energy Expenditure: " +
-    //     Math.round(data.info.tdee, 2) +
-    //     ' calories per day';
-    //   tdeeResultsEl.appendChild(TDEE);
-
-    // }
     let TDEEInfo = document.createElement("ul");
 
     TDEEInfo.style.listStyleType = "none";
@@ -482,12 +469,9 @@ $(document).ready(function () {
     tdeeResultsEl.appendChild(TDEEInfo);
 
     if (data.info.tdee) {
-      let TDEE = createListItem(
-        "Total Daily Energy Expenditure: " +
-          "<strong>" +
-          Math.round(data.info.tdee, 2) +
-          " calories per day</strong>"
-      );
+
+      let TDEE = createListItem("TDEE: " +
+
       TDEEInfo.appendChild(TDEE);
     }
 
@@ -497,6 +481,52 @@ $(document).ready(function () {
       return listItem;
     }
   }
+
+
+  function displayActivityResult(data, activityText, duration) {
+    // Extract relevant information from the API response
+    while (activityResultsEl.firstChild) {
+      activityResultsEl.removeChild(activityResultsEl.firstChild);
+    }
+    activityResultsEl.classList.remove('hidden');
+    let activityInfo = document.createElement("h3");
+    let capActivity = activityText.charAt(0).toUpperCase() + activityText.slice(1);
+    activityInfo.textContent = capActivity + ', ' + duration + ' minutes';
+    activityResultsEl.appendChild(activityInfo);
+
+    let avtivityInfoList = document.createElement("ul");
+
+    avtivityInfoList.style.listStyleType = "none";
+
+    let activityFound = false;
+
+    for (let i = 0; i < 10; i++) {
+      if (data[i]) {
+        let activityItem = document.createElement("li");
+        let fullActivityName = data[i].name;
+        let activityParts = fullActivityName.split('(');
+        let trimmedName = activityParts[0].trim();
+
+        let activityTextSpan = document.createElement("span");
+        activityTextSpan.textContent = trimmedName + ": ";
+
+        let caloriesStrong = document.createElement("strong");
+        caloriesStrong.textContent = data[i].total_calories + " cal";
+
+        activityItem.appendChild(activityTextSpan);
+        activityItem.appendChild(caloriesStrong);
+        avtivityInfoList.appendChild(activityItem);
+
+        activityFound = true;
+      }
+    }
+    if (!activityFound) {
+      let noActivityItem = document.createElement("li");
+      noActivityItem.textContent = "Activity not found";
+      avtivityInfoList.appendChild(noActivityItem);
+    }
+
+    activityResultsEl.appendChild(avtivityInfoList);
 
   // Display saved searches for food
   function getFoodHistory() {
@@ -508,57 +538,26 @@ $(document).ready(function () {
     while (foodResultsEl.firstChild) {
       foodResultsEl.removeChild(foodResultsEl.firstChild);
     }
+    foodResultsEl.classList.remove('hidden');
 
     for (let i = 0; i < savedFoods.length; i++) {
       let historyItem = document.createElement("button");
       historyItem.textContent = `${savedFoods[i].foodName}, ${savedFoods[i].quantity} ${savedFoods[i].measurementUnit}(s)`;
       historyItem.classList.add("history-item");
 
-      console.log(historyItem);
-      // Event listener to call getFoodInfo when the button is clicked
-      historyItem.addEventListener("click", function () {
-        getFoodInfo(
-          savedFoods[i].foodName,
-          savedFoods[i].quantity,
-          savedFoods[i].measurementUnit
-        );
-      });
-
       foodResultsEl.appendChild(historyItem);
-
-      //   }
-      // }
-
-      // Loop through saved cities and display item
-      // for (savedFood of savedFoods) {
-
-      //   let historyItem = `<button class='history-item'>${savedFood.foodName}, ${savedFood.quantity} ${savedFood.measurementUnit}(s)</button>`;
-      //   document.getElementById('results').innerHTML += historyItem;
-      //   console.log(historyItem)
     }
   }
 
-  // Event Handler for Saved foods
-  $(document).on("click", ".history-item", function (event) {
+  // Event Handler for saved foods buttons
     event.preventDefault();
     let selectedFood = $(event.target).text();
-    console.log(selectedFood);
-
     let clickedFood = selectedFood.split(", ");
-
     let food = clickedFood[0];
-    let amount = Number(clickedFood[1].split(" ")[0]);
-    let measurementUnit = clickedFood[1].split(" ")[1];
-    let measure = measurementUnit.replace(/\(s\)/, "");
 
-    console.log("F: " + food);
-    console.log(amount);
-    console.log(measurementUnit);
-    console.log(measure);
+    let amount = Number(clickedFood[1].split(' ')[0]);
+    let measurementUnit = clickedFood[1].split(' ')[1]
 
-    console.log(typeof food);
-    console.log(typeof amount);
-    console.log(typeof measure);
 
     getFoodInfo(food, amount, measure);
   });

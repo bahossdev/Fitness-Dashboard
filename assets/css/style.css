@@ -3,6 +3,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   display: flex;
   flex-direction: column;
@@ -17,16 +21,14 @@ body {
   /* Dark mode colors and gradient */
   background: #121212;
   /* Fallback for browsers that don't support gradients */
-  background: linear-gradient(
-    135deg,
-    #121212 25%,
-    #1a1a1a 25%,
-    #1a1a1a 50%,
-    #121212 50%,
-    #121212 75%,
-    #1a1a1a 75%,
-    #1a1a1a
-  );
+  background: linear-gradient(135deg,
+      #121212 25%,
+      #1a1a1a 25%,
+      #1a1a1a 50%,
+      #121212 50%,
+      #121212 75%,
+      #1a1a1a 75%,
+      #1a1a1a);
   background-size: 40px 40px;
 
   /* Animation */
@@ -54,10 +56,12 @@ body {
   height: 85px;
   border-radius: 30px;
   background: #212121;
+
   /* box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60); */
   box-shadow: 4px 4px 18px rgb(255, 196, 240), -15px -15px 30px rgb(60, 60, 60);
   border: 2px solid;
   margin-bottom: 30px;
+
 }
 
 
@@ -84,6 +88,39 @@ body {
   padding: 40px;
   background-color: lightpink;
   border-radius: 40px;
+}
+
+.form:hover {
+  padding: 47px;
+  box-shadow: 2px 2px 10px rgb(251, 199, 238);
+  transition: all 0.5s ease-in-out;
+  border: none;
+}
+
+form .form-name {
+  font-size: 2rem;
+  color: #560238;
+}
+
+form .form-name:hover {
+  font-size: 2rem;
+  color: #fffeff;
+  text-shadow: 2px 2px 4px rgba(110, 29, 103, 0.819);
+  cursor: pointer;
+}
+
+form .tdeeDscrp {
+  font-size: 1.2rem;
+  color: #560238;
+}
+
+form p,
+form ul li {
+  line-height: 1.3rem;
+}
+
+h3 {
+  margin-bottom: 4px;
 }
 
 .input {
@@ -115,17 +152,32 @@ body {
 }
 
 .history-item {
+  display: block;
+  flex-wrap: wrap;
+  flex-direction: column;
   border-radius: 2rem;
   margin: 6px;
   padding: 5px;
-  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande",
-    "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 100;
-  color: #212121;
-  border: 1px solid grey;
+  font-size: 1rem;
+  padding: 5px;
+  background-color: #c798b7;
   box-shadow: -3px -3px 5px white, 3px 3px 5px rgba(209, 209, 209, 0.705);
-  color: rgb(161, 161, 161);
   cursor: pointer;
+}
+
+.history-item:hover {
+  background-color: #8b1865;
+  color: #fffbfb;
+  padding: 7px;
+  box-shadow: 2px 2px 4px rgba(110, 29, 103, 0.819);
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
 }
 
 .btn {
@@ -174,12 +226,11 @@ body {
   right: 100%;
 }
 
-.or::after {
-}
+.or::after {}
 
-.EMOJIS svg {
+
   filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814))
-    drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
+
 }
 
 .parent {
@@ -222,8 +273,7 @@ button {
   display: flex;
   justify-content: center;
   align-items: center;
-  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg)
-    translateY(2px);
+  transform: translate3d(0px, 0px, 15px) perspective(180px) rotateX(-35deg) translateY(2px);
   border-radius: 50%;
 }
 
@@ -314,7 +364,7 @@ button {
   transform: scale(1.1, 1.1);
 }
 
-.cards:hover > .card:not(:hover) {
+.cards:hover>.card:not(:hover) {
   filter: blur(10px);
   transform: scale(0.9, 0.9);
 }
@@ -344,11 +394,9 @@ button {
 }
 
 .wheel {
-  background: radial-gradient(
-    100% 100% at center,
-    hsla(0, 0%, 60%, 0) 47.8%,
-    hsl(0, 0%, 60%) 48%
-  );
+  background: radial-gradient(100% 100% at center,
+      hsla(0, 0%, 60%, 0) 47.8%,
+      hsl(0, 0%, 60%) 48%);
   z-index: 2;
 }
 
@@ -446,16 +494,14 @@ button {
 .hamster__limb--br,
 .hamster__limb--bl {
   border-radius: 0.75em 0.75em 0 0;
-  clip-path: polygon(
-    0 0,
-    100% 0,
-    100% 30%,
-    70% 90%,
-    70% 100%,
-    30% 100%,
-    40% 90%,
-    0% 30%
-  );
+  clip-path: polygon(0 0,
+      100% 0,
+      100% 30%,
+      70% 90%,
+      70% 100%,
+      30% 100%,
+      40% 90%,
+      0% 30%);
   top: 1em;
   left: 2.8em;
   width: 1.5em;
@@ -490,18 +536,14 @@ button {
 
 .spoke {
   animation: spoke var(--dur) linear infinite;
-  background: radial-gradient(
-      100% 100% at center,
+  background: radial-gradient(100% 100% at center,
       hsl(0, 0%, 60%) 4.8%,
-      hsla(0, 0%, 60%, 0) 5%
-    ),
-    linear-gradient(
-        hsla(0, 0%, 55%, 0) 46.9%,
-        hsl(0, 0%, 65%) 47% 52.9%,
-        hsla(0, 0%, 65%, 0) 53%
-      )
-      50% 50% / 99% 99% no-repeat;
+      hsla(0, 0%, 60%, 0) 5%),
+    linear-gradient(hsla(0, 0%, 55%, 0) 46.9%,
+      hsl(0, 0%, 65%) 47% 52.9%,
+      hsla(0, 0%, 65%, 0) 53%) 50% 50% / 99% 99% no-repeat;
 }
+
 .results {
   padding: 1rem 1.2rem;
   margin: 1rem;
@@ -516,8 +558,10 @@ button {
   color: white;
   font-size: inherit;
 }
+
 /* Animations */
 @keyframes hamster {
+
   from,
   to {
     transform: rotate(4deg) translate(-0.8em, 1.85em);
@@ -529,6 +573,7 @@ button {
 }
 
 @keyframes hamsterHead {
+
   from,
   25%,
   50%,
@@ -546,6 +591,7 @@ button {
 }
 
 @keyframes hamsterEye {
+
   from,
   90%,
   to {
@@ -558,6 +604,7 @@ button {
 }
 
 @keyframes hamsterEar {
+
   from,
   25%,
   50%,
@@ -575,6 +622,7 @@ button {
 }
 
 @keyframes hamsterBody {
+
   from,
   25%,
   50%,
@@ -592,6 +640,7 @@ button {
 }
 
 @keyframes hamsterFRLimb {
+
   from,
   25%,
   50%,
@@ -609,6 +658,7 @@ button {
 }
 
 @keyframes hamsterFLLimb {
+
   from,
   25%,
   50%,
@@ -626,6 +676,7 @@ button {
 }
 
 @keyframes hamsterBRLimb {
+
   from,
   25%,
   50%,
@@ -643,6 +694,7 @@ button {
 }
 
 @keyframes hamsterBLLimb {
+
   from,
   25%,
   50%,
@@ -660,6 +712,7 @@ button {
 }
 
 @keyframes hamsterTail {
+
   from,
   25%,
   50%,
