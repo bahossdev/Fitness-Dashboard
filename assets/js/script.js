@@ -427,11 +427,12 @@ $(document).ready(function () {
 
   // Display the search result for Nutrients Info
   function displayTDEEResult(data, weight, height, age, gender, activityLevel) {
+
     // Extract relevant information from the API response
     while (tdeeResultsEl.firstChild) {
       tdeeResultsEl.removeChild(tdeeResultsEl.firstChild);
     }
-     tdeeResultsEl.classList.remove('hidden');
+    tdeeResultsEl.classList.remove('hidden');
     let activitiyText;
     if (activityLevel == 'se') {
       activitiyText = "Sedentary (office job)"
@@ -473,11 +474,13 @@ $(document).ready(function () {
         "<strong>" + Math.round(data.info.tdee, 2) + " calories/day</strong>");
       TDEEInfo.appendChild(TDEE);
     }
+
     function createListItem(content) {
       let listItem = document.createElement("li");
       listItem.innerHTML = content;
       return listItem;
     }
+
   }
 
 
@@ -525,7 +528,7 @@ $(document).ready(function () {
     }
 
     activityResultsEl.appendChild(avtivityInfoList);
-
+  }
   // Display saved searches for food
   function getFoodHistory() {
     let savedFoods = JSON.parse(localStorage.getItem("foodObject")) || [];
@@ -548,15 +551,16 @@ $(document).ready(function () {
   }
 
   // Event Handler for saved foods buttons
+  $(document).on('click', '.history-item', function (event) {
     event.preventDefault();
     let selectedFood = $(event.target).text();
     let clickedFood = selectedFood.split(", ");
     let food = clickedFood[0];
-
     let amount = Number(clickedFood[1].split(' ')[0]);
     let measurementUnit = clickedFood[1].split(' ')[1]
+    let measure = measurementUnit.replace(/\(s\)/, '');
 
-     getFoodInfo(food, amount, measure);
+    getFoodInfo(food, amount, measure);
   })
 
 });
