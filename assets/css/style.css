@@ -65,9 +65,10 @@ aside {
   height: 85px;
   border-radius: 30px;
   background: #212121;
+
+  /* box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60); */
   box-shadow: 4px 4px 18px rgb(255, 196, 240), -15px -15px 30px rgb(60, 60, 60);
   border: 2px solid;
-  margin-bottom: 30px;
 }
 
 .form-container {
@@ -152,6 +153,7 @@ h3 {
   cursor: pointer;
   background-color: #9F2C75;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+
   font-size: 1.05rem;
   text-align: center;
 }
@@ -160,7 +162,6 @@ h3 {
 .btn:hover {
   background-color: #c674a8;
   color:#212121;
-  box-shadow:-3px -3px 5px rgb(60, 60, 60);
 }
 
 .history-item {
@@ -170,6 +171,7 @@ h3 {
   border-radius: 2rem;
   margin: 6px;
   padding: 5px;
+
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 100;
   font-size: 1rem;
@@ -239,7 +241,7 @@ h3 {
 
 .EMOJIS svg {
   filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814)) 
-  drop-shadow(2px 1px 3px rgba(230, 220, 220, 0.819));
+
 }
 
 .parent {
@@ -300,6 +302,13 @@ button {
   justify-content: center;
 }
 
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 70px;
+  align-items: center;
+}
 
 .cards .red {
   padding: 5px;
@@ -754,10 +763,12 @@ button {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
+
   padding-top: 180px; /* Location of the box */
   left: 0;
   top: 0;
   width: 100%; /* Full width */
+
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
@@ -773,7 +784,6 @@ button {
   width: 20%;
   height: 10%;
   border-radius: 15px;
-  font-size: 1.1rem;
 }
 
 /* The Close Button */
@@ -816,4 +826,4 @@ button {
 .hidden {
   display: none;
 }
-}
+
