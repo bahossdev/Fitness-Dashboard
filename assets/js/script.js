@@ -84,11 +84,11 @@ $(document).ready(function () {
     let gender = genderEl.value;
     let activityLevel = activityEl.value;
 
+    if (!weight || !height || !age || !gender || !activityLevel) {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
       tdeeResultsEl.removeChild(foodResultsEl.firstChild);
-    }
-    if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+    } else if (isNaN(weight) || isNaN(height) || isNaN(age)) {
       alertEl.textContent = "Please enter a number!";
       modal.style.display = "block";
     } else {
@@ -431,16 +431,16 @@ $(document).ready(function () {
     while (tdeeResultsEl.firstChild) {
       tdeeResultsEl.removeChild(tdeeResultsEl.firstChild);
     }
-    tdeeResultsEl.classList.remove('hidden');
+     tdeeResultsEl.classList.remove('hidden');
     let activitiyText;
-    if ((activityLevel = "se")) {
-      activitiyText = "Sedentary (office job)";
-    } else if ((activityLevel = "la")) {
-      activitiyText = "Light Exercise (1-2 days/week)";
-    } else if ((activityLevel = "ma")) {
-      activitiyText = "Moderate Exercise (3-5 days/week)";
+    if (activityLevel == 'se') {
+      activitiyText = "Sedentary (office job)"
+    } else if (activityLevel == 'la') {
+      activitiyText = "Light Exercise (1-2 days/week)"
+    } else if (activityLevel == 'ma') {
+      activitiyText == "Moderate Exercise (3-5 days/week)"
     } else {
-      activitiyText = "Heavy Exercise (6-7 days/week)";
+      activitiyText == "Heavy Exercise (6-7 days/week)"
     }
 
     let TDEEInfo = document.createElement("ul");
@@ -469,12 +469,10 @@ $(document).ready(function () {
     tdeeResultsEl.appendChild(TDEEInfo);
 
     if (data.info.tdee) {
-
       let TDEE = createListItem("TDEE: " +
-
+        "<strong>" + Math.round(data.info.tdee, 2) + " calories/day</strong>");
       TDEEInfo.appendChild(TDEE);
     }
-
     function createListItem(content) {
       let listItem = document.createElement("li");
       listItem.innerHTML = content;
@@ -558,9 +556,9 @@ $(document).ready(function () {
     let amount = Number(clickedFood[1].split(' ')[0]);
     let measurementUnit = clickedFood[1].split(' ')[1]
 
+     getFoodInfo(food, amount, measure);
+  })
 
-    getFoodInfo(food, amount, measure);
-  });
 });
 
 span.onclick = function () {

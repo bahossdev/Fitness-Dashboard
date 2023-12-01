@@ -11,6 +11,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
+  flex-wrap: wrap;
   /* Basic dimensions and centering */
   width: 100%;
   height: 100%;
@@ -33,6 +34,14 @@ body {
 
   /* Animation */
   animation: move 4s linear infinite;
+}
+
+aside {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 @keyframes move {
@@ -60,20 +69,13 @@ body {
   /* box-shadow: 15px 15px 30px rgb(25, 25, 25), -15px -15px 30px rgb(60, 60, 60); */
   box-shadow: 4px 4px 18px rgb(255, 196, 240), -15px -15px 30px rgb(60, 60, 60);
   border: 2px solid;
-  margin-bottom: 30px;
-
-}
-
-
-.container {
-  height: 100%;
-  width: 100%;
 }
 
 .form-container {
-  margin-top: 55px;
+  margin-top: 30px;
   padding: 60px 20px;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-evenly;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -91,15 +93,14 @@ body {
 }
 
 .form:hover {
-  padding: 47px;
-  box-shadow: 2px 2px 10px rgb(251, 199, 238);
+  box-shadow: inset 8px 8px 25px rgba(45, 38, 45, 0.767);
   transition: all 0.5s ease-in-out;
-  border: none;
 }
 
 form .form-name {
   font-size: 2rem;
   color: #560238;
+  text-align: center;
 }
 
 form .form-name:hover {
@@ -124,11 +125,11 @@ h3 {
 }
 
 .input {
-  padding: 1rem 1.2rem;
+  padding: 0.5rem 1.2rem;
   margin: 1rem;
   border-radius: 2rem;
   display: block;
-  width: 80%;
+  width: 70%;
   border: none;
   box-shadow: inset 6px 6px 8px rgba(97, 97, 97, 0.075),
     6px 6px 6px rgba(255, 255, 255, 0.781);
@@ -136,6 +137,11 @@ h3 {
   background-color: lightgrey;
   color: rgb(0, 0, 0);
   font-size: inherit;
+}
+
+.input-text:focus {
+  box-shadow: inset 6px 6px 8px rgba(115, 115, 115, 0.593);
+  background-color: whitesmoke;
 }
 
 .submit,
@@ -147,8 +153,15 @@ h3 {
   cursor: pointer;
   background-color: #9F2C75;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
-  font-size: 22px;
 
+  font-size: 1.05rem;
+  text-align: center;
+}
+
+.submit:hover,
+.btn:hover {
+  background-color: #c674a8;
+  color:#212121;
 }
 
 .history-item {
@@ -226,10 +239,8 @@ h3 {
   right: 100%;
 }
 
-.or::after {}
-
-
-  filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814))
+.EMOJIS svg {
+  filter: drop-shadow(2px 2px 5px rgba(205, 155, 196, 0.814)) 
 
 }
 
@@ -292,7 +303,6 @@ button {
 }
 
 
-
 .cards {
   display: flex;
   justify-content: center;
@@ -301,6 +311,7 @@ button {
 }
 
 .cards .red {
+  padding: 5px;
   background-color: #d281b5;
 }
 
@@ -339,6 +350,8 @@ button {
   justify-content: center;
   flex-direction: column;
   text-align: center;
+  margin-left: 10px;
+  margin-right: 10px;
   height: 200px;
   width: 300px;
   border-radius: 10px;
@@ -362,6 +375,8 @@ button {
 
 .cards .card:hover {
   transform: scale(1.1, 1.1);
+  margin-left: 15px;
+  margin-right: 15px;
 }
 
 .cards:hover>.card:not(:hover) {
@@ -748,10 +763,12 @@ button {
   display: none; /* Hidden by default */
   position: fixed; /* Stay in place */
   z-index: 1; /* Sit on top */
-  padding-top: 100px; /* Location of the box */
+
+  padding-top: 180px; /* Location of the box */
   left: 0;
   top: 0;
-  width: 50%; /* Full width */
+  width: 100%; /* Full width */
+
   height: 100%; /* Full height */
   overflow: auto; /* Enable scroll if needed */
   background-color: rgb(0, 0, 0); /* Fallback color */
@@ -760,11 +777,13 @@ button {
 
 /* Modal Content */
 .modal-content {
-  background-color: #fefefe;
+  background-color: #f5d6e7;
   margin: auto;
-  padding: 20px;
+  padding: 30px;
   border: 1px solid #888;
-  width: 80%;
+  width: 20%;
+  height: 10%;
+  border-radius: 15px;
 }
 
 /* The Close Button */
@@ -777,7 +796,34 @@ button {
 
 .close:hover,
 .close:focus {
-  color: #000;
+  color: #5d0d5e;
   text-decoration: none;
   cursor: pointer;
 }
+
+@media screen and (max-width: 480px) {
+  .input {
+    font-size: 1.3rem;
+  }
+  
+  .submit,
+  .btn {
+    font-size: 1.2rem;
+    text-align: center;
+  }
+
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 360px;
+  font-size: 1rem;
+  border: 5px solid;
+  padding: 40px;
+  background-color: lightpink;
+  border-radius: 40px;
+}
+.hidden {
+  display: none;
+}
+

@@ -9,10 +9,12 @@
 </head>
 
 <body>
+
+    <!-- Header -->
     <header>
         <div class="card">Fitness Dashboard</div>
+        <!-- Emojis -->
         <section class="EMOJIS">
-
             <div class=" flex justify-center items-center rounded-3xl">
                 <a href="#foodTop">
                     <svg y="0" xmlns="http://www.w3.org/2000/svg" x="0" width="100" viewBox="0 0 100 100"
@@ -41,9 +43,9 @@
                     </svg>
                 </a>
             </div>
-
         </section>
     </header>
+
 
     <div class="tabs">
 
@@ -125,6 +127,96 @@
                 <div class="input hidden" id="activityResults"></div>
             </form>
 
+
+
+    <!-- Sport facts! -->
+    <aside class="cards">
+        <div class="card red">
+            <p class="text-1">Regular physical activity can reduce the risk of chronic diseases.</p>
+            <p class="second-text"></p>
+        </div>
+        <div class="card white">
+            <p class="text-2">A balanced diet
+                is essential for the overall health.</p>
+            <p class="second-text"></p>
+        </div>
+        <div class="card blue">
+            <p class="text-3">Quality sleep is important for physical and mental health.</p>
+            <p class="second-text"></p>
+        </div>
+    </aside>
+
+    <!-- Forms -->
+    <div class="container column form-container">
+
+        <!-- Food form -->
+        <form action="" class="form foodForm" id="foodTop">
+            <a href="#foodTop" style="text-decoration: none;">
+                <div class="logo form-name" id="food">Nutrition Info</div>
+            </a>
+            <input type="text" id="food-input" class="input input-text foodText" required="" placeholder="Enter food name">
+            <input type="text" id="amount" class="input input-text foodInput" required placeholder="Enter number">
+            <select type="select" id="foodType" required class="input">
+                <option>Choose an option</option>
+                <option class="measure" value="serving">serving</option>
+                <option class="measure" value="gram">gram</option>
+                <option class="measure" value="ounce">ounce</option>
+                <option class="measure" value="cup">cup</option>
+                <option class="measure" value="unit">unit</option>
+            </select>
+            <input type="submit" value="Get Nutritions Info" class="input submit">
+            <div class="input hidden" id="foodResults"></div>
+            <div class="or">or</div>
+            <div class="input btn">Food Search History</div>
+        </form>
+
+        <!-- TDEE form -->
+        <form action="" class="form tdeeForm" id="tdeeTop">
+            <a href="#tdeeTop" style="text-decoration: none;">
+                <div class="logo form-name" id="tdee">TDEE</div>
+            </a>
+            <p class="tdeeDscrp">Total Daily Energy Expenditure</p>
+            <input type="text" id='weight' class="input input-text weight" required placeholder="Enter weight (kg)">
+            <input type="text" id='height' class="input input-text height" required placeholder="Enter height (cm)">
+            <input type="text" id="age" class="input input-text" required placeholder="Enter age">
+
+            <!-- Gender input -->
+            <select type="select" id="gender" required class="input">
+                <option>Gender</option>
+                <option value="female">female</option>
+                <option value="male">male</option>
+            </select>
+
+            <!-- Activity level -->
+            <select type="select" id="activity" required class="input">
+                <option>Choose an activity level</option>
+                <option value="se">Sedentary (office job)</option>
+                <option value="la">Light Exercise (1-2 days/week)</option>
+                <option value="ma">Moderate Exercise (3-5 days/week)</option>
+                <option value="va">Heavy Exercise (6-7 days/week)</option>
+            </select>
+            <input type="submit" value="Calculate TDEE" class="input submit">
+            <div class="input hidden" id="tdeeResults"></div>
+        </form>
+
+        <!-- Activity form -->
+        <form action="" class="form activityForm" id="activityTop">
+            <a href="#activityTop" style="text-decoration: none;">
+                <div class="logo form-name" id="activity2">Activity</div>
+            </a>
+            <input type="text" id="activity-input" class="input-text input activityText" required placeholder="Enter activity">
+            <input type="text" id="duration" class="input" required placeholder="Enter duration (mins) ">
+            <input type="submit" value="Search" class="input submit">
+            <div class="input hidden" id="activityResults"></div>
+        </form>
+
+        <!-- The modal -->
+        <div id="myModal" class="modal">
+            <div class="modal-content">
+                <span class="close">&times;</span>
+                <p id="alert"></p>
+            </div>
+        </div>
     </div>
     <div id="myModal" class="modal">
         <div class="modal-content">
@@ -135,6 +227,7 @@
       </div>
     <!-- Footer -->
     <footer>
+        <!-- Hamster -->
         <section class="HAMSTER">
             <div aria-label="Orange and tan hamster running in a metal wheel" role="img" class="wheel-and-hamster">
                 <div class="wheel"></div>
@@ -155,6 +248,8 @@
                 <div class="spoke"></div>
             </div>
         </section>
+
+        <!-- Social media -->
         <section class="SOCIALS">
             <div class="parent">
                 <div class="child child-1">
@@ -193,6 +288,8 @@
             </div>
         </section>
     </footer>
+
+    <!-- Scripts for jQuery and JS -->
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./assets/js/script.js"></script>
 
