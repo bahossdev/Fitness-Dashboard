@@ -87,7 +87,7 @@ $(document).ready(function () {
       alertEl.textContent = "Please fill all mandatory fields!";
       modal.style.display = "block";
       return;
-    } else if (isNaN(weight) || isNaN(height) || isNaN(age)) {
+    } else if (isNaN(weight) || isNaN(height) || isNaN(age) || (weight == 0) || (height == 0) || (age == 0)) {
       alertEl.textContent = "Please enter a number!";
       modal.style.display = "block";
     } else {
@@ -492,6 +492,9 @@ $(document).ready(function () {
     let activityInfo = document.createElement("h3");
     let capActivity =
       activityText.charAt(0).toUpperCase() + activityText.slice(1);
+      if (duration == 0) {
+        duration = 60;
+      }
     activityInfo.textContent = capActivity + ", " + duration + " minutes";
     activityResultsEl.appendChild(activityInfo);
 
