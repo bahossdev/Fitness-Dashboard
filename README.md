@@ -67,4 +67,5 @@ https://bahossdev.github.io/Fitness-Dashboard/
 https://github.com/bahossdev/Fitness-Dashboard
 
 ## Screenshot:
-![Screenshot](https://github.com/bahossdev/Fitness-Dashboard/assets/148646212/79ceefce-c6aa-4890-bf5e-6695abc4517b)
+![Screenshot](https://github.com/bahossdev/Fitness-Dashboard/assets/148646212/2591eb1a-4682-40ec-9ff5-6a67e735adc5)
+
